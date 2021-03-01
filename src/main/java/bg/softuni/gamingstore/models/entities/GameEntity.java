@@ -13,9 +13,19 @@ public class GameEntity extends BaseEntity{
     private String name;
     private String description;
     private BigDecimal price;
+    private String platform;
     private GenreEnum genre;
 
     public GameEntity() {
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public GameEntity setPlatform(String platform) {
+        this.platform = platform;
+        return this;
     }
 
     public String getName() {
