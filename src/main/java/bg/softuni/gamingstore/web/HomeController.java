@@ -10,4 +10,9 @@ public class HomeController {
     public String index(){
         return "home";
     }
+
+    @GetMapping("/coming-soon")
+    public String comingSoon(){
+        return "coming-soon";
+    }
 }

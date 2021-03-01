@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
-    
-<html lang="en">
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -78,7 +78,7 @@
     
     
 <!-- START: Top Contacts -->
-<div class="nk-contacts-top">
+<div th:replace="fragments/fragment :: topContacts" class="nk-contacts-top">
     <div class="container">
         <div class="nk-contacts-left">
             <ul class="nk-social-links">
@@ -187,7 +187,7 @@
             .nk-navbar-transparent
             .nk-navbar-autohide
     -->
-    <nav class="nk-navbar nk-navbar-top nk-navbar-sticky nk-navbar-autohide">
+    <nav th:replace="fragments/fragment :: navbar" class="nk-navbar nk-navbar-top nk-navbar-sticky nk-navbar-autohide">
         <div class="container">
             <div class="nk-nav-table">
                 
@@ -977,7 +977,7 @@
 
         
             <!-- START: Footer -->
-<footer class="nk-footer">
+<footer th:replace="fragments/fragment :: footer" class="nk-footer">
 
     <div class="container">
         <div class="nk-gap-3"></div>
