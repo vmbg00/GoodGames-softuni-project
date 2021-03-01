@@ -1,9 +1,6 @@
 package bg.softuni.gamingstore.models.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -19,6 +16,46 @@ public class UserEntity extends BaseEntity{
     private List<BlogEntity> blogs;
 
     public UserEntity() {
+    }
+
+    @Column(unique = true, nullable = false)
+    public String getUsername() {
+        return username;
+    }
+
+    public UserEntity setUsername(String username) {
+        this.username = username;
+        return this;
+    }
+
+    @Column
+    public String getPassword() {
+        return password;
+    }
+
+    public UserEntity setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    @Column
+    public String getEmail() {
+        return email;
+    }
+
+    public UserEntity setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    @ManyToMany
+    public List<RoleEntity> getRoles() {
+        return roles;
+    }
+
+    public UserEntity setRoles(List<RoleEntity> roles) {
+        this.roles = roles;
+        return this;
     }
 
     @ManyToMany
@@ -48,43 +85,6 @@ public class UserEntity extends BaseEntity{
 
     public UserEntity setPosts(List<ForumPosts> posts) {
         this.posts = posts;
-        return this;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public UserEntity setUsername(String username) {
-        this.username = username;
-        return this;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public UserEntity setPassword(String password) {
-        this.password = password;
-        return this;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public UserEntity setEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
-    @ManyToMany
-    public List<RoleEntity> getRoles() {
-        return roles;
-    }
-
-    public UserEntity setRoles(List<RoleEntity> roles) {
-        this.roles = roles;
         return this;
     }
 }

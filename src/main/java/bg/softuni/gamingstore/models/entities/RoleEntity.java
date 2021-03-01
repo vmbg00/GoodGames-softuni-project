@@ -2,8 +2,7 @@ package bg.softuni.gamingstore.models.entities;
 
 import bg.softuni.gamingstore.models.entities.enums.RoleEnums;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "roles")
@@ -15,6 +14,7 @@ public class RoleEntity extends BaseEntity{
     public RoleEntity() {
     }
 
+    @Enumerated(value = EnumType.STRING)
     public RoleEnums getName() {
         return name;
     }
@@ -24,6 +24,7 @@ public class RoleEntity extends BaseEntity{
         return this;
     }
 
+    @Column(nullable = false, columnDefinition = "TEXT")
     public String getDescription() {
         return description;
     }

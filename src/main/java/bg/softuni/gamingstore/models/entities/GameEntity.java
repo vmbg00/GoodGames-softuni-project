@@ -2,8 +2,7 @@ package bg.softuni.gamingstore.models.entities;
 
 import bg.softuni.gamingstore.models.entities.enums.GenreEnum;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -19,15 +18,7 @@ public class GameEntity extends BaseEntity{
     public GameEntity() {
     }
 
-    public String getPlatform() {
-        return platform;
-    }
-
-    public GameEntity setPlatform(String platform) {
-        this.platform = platform;
-        return this;
-    }
-
+    @Column(unique = true, nullable = false)
     public String getName() {
         return name;
     }
@@ -37,6 +28,7 @@ public class GameEntity extends BaseEntity{
         return this;
     }
 
+    @Column(nullable = false, columnDefinition = "TEXT")
     public String getDescription() {
         return description;
     }
@@ -46,6 +38,18 @@ public class GameEntity extends BaseEntity{
         return this;
     }
 
+    @Column(nullable = false)
+    public String getPlatform() {
+        return platform;
+    }
+
+    public GameEntity setPlatform(String platform) {
+        this.platform = platform;
+        return this;
+    }
+
+
+    @Column(nullable = false)
     public BigDecimal getPrice() {
         return price;
     }
@@ -55,6 +59,7 @@ public class GameEntity extends BaseEntity{
         return this;
     }
 
+    @Enumerated(value = EnumType.STRING)
     public GenreEnum getGenre() {
         return genre;
     }
