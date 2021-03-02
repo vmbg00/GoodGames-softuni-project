@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
@@ -13,6 +14,7 @@ public class ForumPosts extends BaseEntity{
 
     private String title;
     private LocalDateTime published;
+    private UserEntity user;
 
     public ForumPosts() {
     }
@@ -35,6 +37,16 @@ public class ForumPosts extends BaseEntity{
 
     public ForumPosts setTitle(String title) {
         this.title = title;
+        return this;
+    }
+
+    @ManyToOne
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public ForumPosts setUser(UserEntity user) {
+        this.user = user;
         return this;
     }
 }

@@ -12,8 +12,6 @@ public class UserEntity extends BaseEntity{
     private String email;
     private List<RoleEntity> roles;
     private List<GameEntity> games;
-    private List<ForumPosts> posts;
-    private List<BlogEntity> blogs;
 
     public UserEntity() {
     }
@@ -59,16 +57,6 @@ public class UserEntity extends BaseEntity{
     }
 
     @ManyToMany
-    public List<BlogEntity> getBlogs() {
-        return blogs;
-    }
-
-    public UserEntity setBlogs(List<BlogEntity> blogs) {
-        this.blogs = blogs;
-        return this;
-    }
-
-    @ManyToMany
     public List<GameEntity> getGames() {
         return games;
     }
@@ -78,13 +66,4 @@ public class UserEntity extends BaseEntity{
         return this;
     }
 
-    @ManyToMany
-    public List<ForumPosts> getPosts() {
-        return posts;
-    }
-
-    public UserEntity setPosts(List<ForumPosts> posts) {
-        this.posts = posts;
-        return this;
-    }
 }
