@@ -25,7 +25,7 @@ public class GalleryController {
     }
 
     @GetMapping("/gallery")
-    public String gallery(Model model){
+    public String gallery(Model model) {
         model.addAttribute("pictures", this.galleryService.getAllPics());
         return "gallery";
     }

@@ -33,7 +33,7 @@ public class GalleryServiceImpl implements GalleryService {
 
     @Override
     public List<GalleryViewModel> getAllPics() {
-        return this.picturesRepository.findAll().stream().map(pictureEntity ->
+        return this.picturesRepository.findAllByOrderByIdDesc().stream().map(pictureEntity ->
                 this.modelMapper.map(pictureEntity, GalleryViewModel.class)).collect(Collectors.toList());
     }
 }

@@ -106,6 +106,11 @@ body.nk-page-boxed {
     margin: 0 auto;
 }
 
+.resize{
+    width: 429.33px;
+    height: 379.23px;
+}
+
 a {
     color: #dd163b;
     -webkit-transition: .15s color;
