@@ -15,4 +15,9 @@ public class HomeController {
     public String comingSoon(){
         return "coming-soon";
     }
+
+    @GetMapping("/news")
+    public String news(){
+        return "news";
+    }
 }
