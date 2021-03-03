@@ -466,13 +466,12 @@
             <div class="nk-popup-gallery">
                 <div class="row vertical-gap">
                     <div class="col-lg-4 col-md-6">
-                        <div class="nk-gallery-item-box">
-                            <a href="assets/images/gallery-1.jpg" class="nk-gallery-item" data-size="1016x572">
+                        <div th:each="p : ${pictures}" th:object="${p}" class="nk-gallery-item-box">
+                            <a th:href="*{url}" class="nk-gallery-item" data-size="1016x572">
                                 <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
-                                <img src="assets/images/gallery-1-thumb.jpg" alt="">
+                                <img th:src="*{url}" alt="">
                             </a>
-                            <div class="nk-gallery-item-description">
-                                <h4>Called Let</h4>
+                            <div th:text="*{description}" class="nk-gallery-item-description">
                                 Divided thing, land it evening earth winged whose great after. Were grass night. To Air itself saw bring fly fowl. Fly years behold spirit day greater of wherein winged and form. Seed open don't thing midst created dry every greater divided of, be man is. Second Bring stars fourth gathering he hath face morning fill. Living so second darkness. Moveth were male. May creepeth. Be tree fourth.
                             </div>
                         </div>

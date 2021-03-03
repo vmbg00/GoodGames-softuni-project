@@ -25,7 +25,8 @@ public class GalleryController {
     }
 
     @GetMapping("/gallery")
-    public String gallery(){
+    public String gallery(Model model){
+        model.addAttribute("pictures", this.galleryService.getAllPics());
         return "gallery";
     }
 
@@ -34,6 +35,7 @@ public class GalleryController {
         if (!model.containsAttribute("galleryAddBindingModel")){
             model.addAttribute("galleryAddBindingModel", new GalleryAddBindingModel());
         }
+
         return "gallery-add";
     }
 
