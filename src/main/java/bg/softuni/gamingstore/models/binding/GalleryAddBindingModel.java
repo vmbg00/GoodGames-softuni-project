@@ -1,6 +1,7 @@
 package bg.softuni.gamingstore.models.binding;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 public class GalleryAddBindingModel {
 
@@ -12,6 +13,7 @@ public class GalleryAddBindingModel {
     }
 
     @NotBlank(message = "Cannot be blank")
+    @Size(min = 5, message = "Needs to be at least 5 characters")
     public String getTitle() {
         return title;
     }
@@ -22,6 +24,7 @@ public class GalleryAddBindingModel {
     }
 
     @NotBlank(message = "Cannot be blank")
+    @Size(min = 10, message = "Needs to be at least 10 characters")
     public String getDescription() {
         return description;
     }
