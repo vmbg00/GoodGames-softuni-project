@@ -84,7 +84,7 @@
                 </ul>
                 </li>
                 <li>
-                    <a sec:authorize="${isAuthenticated()}" href="/users/logout">
+                    <a sec:authorize="${isAuthenticated()}" th:href="@{/users/logout}">
                         Logout
 
                     </a>
