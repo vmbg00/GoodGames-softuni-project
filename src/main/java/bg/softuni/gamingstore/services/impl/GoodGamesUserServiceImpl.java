@@ -36,7 +36,7 @@ public class GoodGamesUserServiceImpl implements UserDetailsService {
                 userEntity.
                         getRoles().
                         stream().
-                        map(r -> new SimpleGrantedAuthority(r.getName().name())).
+                        map(r -> new SimpleGrantedAuthority("ROLE_" + r.getName().name())).
                         collect(Collectors.toList());
 
         return new User(

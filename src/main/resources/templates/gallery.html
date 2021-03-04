@@ -594,9 +594,9 @@
 <!--            </div>-->
 <!--            &lt;!&ndash; END: Latest Pictures &ndash;&gt;-->
 
-            <div sec:authorize="hasRole('ADMIN')" class="nk-gap-1"></div>
+            <div class="nk-gap-1"></div>
 
-            <a href="/gallery/add" class="alert-link">
+            <a sec:authorize="hasRole('ROLE_ADMIN')" href="/gallery/add" class="alert-link">
                 <button type="button" class="btn btn-primary btn-lg pull-right">
                     Add picture
                 </button>
