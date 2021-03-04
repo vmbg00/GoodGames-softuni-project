@@ -1,6 +1,8 @@
 package bg.softuni.gamingstore.web;
 
+import bg.softuni.gamingstore.models.binding.LoginBindingModel;
 import bg.softuni.gamingstore.models.binding.RegisterBindingModel;
+import bg.softuni.gamingstore.models.services.LoginServiceModel;
 import bg.softuni.gamingstore.models.services.RegisterServiceModel;
 import bg.softuni.gamingstore.services.UserService;
 import org.modelmapper.ModelMapper;
@@ -24,6 +26,39 @@ public class UserController {
     public UserController(UserService userService, ModelMapper modelMapper) {
         this.userService = userService;
         this.modelMapper = modelMapper;
+    }
+
+    @GetMapping("/login")
+    public String login(Model model){
+        if (!model.containsAttribute("loginBindingModel")){
+            model.addAttribute("loginBindingModel", new LoginBindingModel());
+        }
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String loginConfirm(@Valid LoginBindingModel loginBindingModel,
+                               BindingResult bindingResult,
+                               RedirectAttributes redirectAttributes){
+
+        if (bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("loginBindingModel", loginBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.loginBindingModel", bindingResult);
+
+            return "redirect:login";
+        }
+
+        if (this.userService.authenticate(loginBindingModel.getUsername(), loginBindingModel.getPassword())){
+            this.userService.login(modelMapper.map(loginBindingModel, LoginServiceModel.class));
+
+            return "redirect:/";
+        }
+        else {
+            redirectAttributes.addFlashAttribute("loginBindingModel", loginBindingModel);
+            redirectAttributes.addFlashAttribute("notFound", true);
+
+            return "redirect:login";
+        }
     }
 
     @GetMapping("/register")

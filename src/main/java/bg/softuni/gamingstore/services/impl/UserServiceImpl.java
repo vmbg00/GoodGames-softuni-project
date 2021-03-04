@@ -3,6 +3,7 @@ package bg.softuni.gamingstore.services.impl;
 import bg.softuni.gamingstore.models.entities.RoleEntity;
 import bg.softuni.gamingstore.models.entities.UserEntity;
 import bg.softuni.gamingstore.models.entities.enums.RoleEnums;
+import bg.softuni.gamingstore.models.services.LoginServiceModel;
 import bg.softuni.gamingstore.models.services.RegisterServiceModel;
 import bg.softuni.gamingstore.repositories.RolesRepository;
 import bg.softuni.gamingstore.repositories.UserRepository;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -41,5 +43,22 @@ public class UserServiceImpl implements UserService {
                 .setPassword(this.passwordEncoder.encode(newUser.getPassword()));
 
         this.userRepository.save(userEntity);
+    }
+
+    @Override
+    public boolean authenticate(String username, String password) {
+        Optional<UserEntity> user = this.userRepository.findByUsername(username);
+
+        if (user.isEmpty()){
+            return false;
+        }
+        else {
+            return user.get().getPassword().equals(password);
+        }
+    }
+
+    @Override
+    public void login(LoginServiceModel map) {
+
     }
 }
