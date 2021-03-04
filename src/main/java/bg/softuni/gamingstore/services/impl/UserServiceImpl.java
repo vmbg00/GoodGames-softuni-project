@@ -3,7 +3,6 @@ package bg.softuni.gamingstore.services.impl;
 import bg.softuni.gamingstore.models.entities.RoleEntity;
 import bg.softuni.gamingstore.models.entities.UserEntity;
 import bg.softuni.gamingstore.models.entities.enums.RoleEnums;
-import bg.softuni.gamingstore.models.services.LoginServiceModel;
 import bg.softuni.gamingstore.models.services.RegisterServiceModel;
 import bg.softuni.gamingstore.repositories.RolesRepository;
 import bg.softuni.gamingstore.repositories.UserRepository;
@@ -55,10 +54,5 @@ public class UserServiceImpl implements UserService {
         else {
             return user.get().getPassword().equals(password);
         }
-    }
-
-    @Override
-    public void login(LoginServiceModel map) {
-
     }
 }

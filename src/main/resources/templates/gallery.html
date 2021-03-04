@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 
 
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -593,7 +594,7 @@
 <!--            </div>-->
 <!--            &lt;!&ndash; END: Latest Pictures &ndash;&gt;-->
 
-            <div class="nk-gap-1"></div>
+            <div sec:authorize="hasRole('ADMIN')" class="nk-gap-1"></div>
 
             <a href="/gallery/add" class="alert-link">
                 <button type="button" class="btn btn-primary btn-lg pull-right">

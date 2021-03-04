@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
-    <title>GoodGames | Register</title>
+    <title>GoodGames | Login</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -103,23 +103,23 @@
 </head>
 <body>
 <div class="signup-form">
-    <form action="/users/register" method="POST" th:object="${loginBindingModel}">
-        <h5 th:if="${notFound}" class="text-center text-light form-text bg-danger rounded">User doesn't exists</h5>
+    <form th:action="@{/users/login}" method="POST">
         <h2>Login</h2>
+        <h5 th:if="${bad_credentials}" class="text-center text-light form-text bg-danger rounded">User doesn't exists</h5>
         <p></p>
         <hr>
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                <input th:field="*{username}" type="text" class="form-control" name="username" placeholder="Enter username" required="required">
-                <small th:if="${#fields.hasErrors('username')}" th:errors="*{username}" id="usernameError" class="form-text bg-danger rounded"></small>
+                <input th:value="${username}" type="text" class="form-control" name="username" placeholder="Enter username" required="required">
+                <small id="usernameError" class="form-text bg-danger rounded"></small>
             </div>
         </div>
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                <input th:field="*{password}" type="text" class="form-control" name="password" placeholder="Enter password" required="required">
-                <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}" id="passwordError" class="form-text bg-danger rounded"></small>
+                <input type="text" class="form-control" name="password" placeholder="Enter password" required="required">
+                <small id="passwordError" class="form-text bg-danger rounded"></small>
             </div>
         </div>
         <div class="form-group">

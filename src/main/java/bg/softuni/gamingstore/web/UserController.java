@@ -1,17 +1,18 @@
 package bg.softuni.gamingstore.web;
 
-import bg.softuni.gamingstore.models.binding.LoginBindingModel;
 import bg.softuni.gamingstore.models.binding.RegisterBindingModel;
-import bg.softuni.gamingstore.models.services.LoginServiceModel;
 import bg.softuni.gamingstore.models.services.RegisterServiceModel;
 import bg.softuni.gamingstore.services.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -29,37 +30,33 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login(Model model){
-        if (!model.containsAttribute("loginBindingModel")){
-            model.addAttribute("loginBindingModel", new LoginBindingModel());
-        }
+    public String login(){
         return "login";
     }
 
-    @PostMapping("/login")
-    public String loginConfirm(@Valid LoginBindingModel loginBindingModel,
-                               BindingResult bindingResult,
-                               RedirectAttributes redirectAttributes){
-
-        if (bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("loginBindingModel", loginBindingModel);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.loginBindingModel", bindingResult);
-
-            return "redirect:login";
-        }
-
-        if (this.userService.authenticate(loginBindingModel.getUsername(), loginBindingModel.getPassword())){
-            this.userService.login(modelMapper.map(loginBindingModel, LoginServiceModel.class));
-
-            return "redirect:/";
-        }
-        else {
-            redirectAttributes.addFlashAttribute("loginBindingModel", loginBindingModel);
-            redirectAttributes.addFlashAttribute("notFound", true);
-
-            return "redirect:login";
-        }
-    }
+//    @PostMapping("/login")
+//    public String loginConfirm(@Valid LoginBindingModel loginBindingModel,
+//                               BindingResult bindingResult,
+//                               RedirectAttributes redirectAttributes){
+//
+//        if (bindingResult.hasErrors()){
+//            redirectAttributes.addFlashAttribute("loginBindingModel", loginBindingModel);
+//            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.loginBindingModel", bindingResult);
+//
+//            return "redirect:login";
+//        }
+//
+//        if (this.userService.authenticate(loginBindingModel.getUsername(), loginBindingModel.getPassword())){
+//
+//            return "redirect:/";
+//        }
+//        else {
+//            redirectAttributes.addFlashAttribute("loginBindingModel", loginBindingModel);
+//            redirectAttributes.addFlashAttribute("notFound", true);
+//
+//            return "redirect:login";
+//        }
+//    }
 
     @GetMapping("/register")
     public String register(Model model){
@@ -84,6 +81,19 @@ public class UserController {
         this.userService.register(this.modelMapper.map(registerBindingModel, RegisterServiceModel.class));
 
         return "redirect:/";
+    }
+
+    @PostMapping("/login-error")
+    public ModelAndView failedLogin(@ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
+                                    String username){
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.addObject("bad_credentials", true);
+        modelAndView.addObject("username", username);
+
+        modelAndView.setViewName("/login");
+
+        return modelAndView;
     }
 
 
