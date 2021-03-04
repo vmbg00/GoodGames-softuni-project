@@ -11,6 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Configuration
 @EnableWebSecurity
@@ -27,6 +30,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        http.csrf().requireCsrfProtectionMatcher(new AllExceptUrlsStartedWith("/gallery/add"));
 
         http.
                 authorizeRequests().
@@ -63,5 +68,39 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.
                 userDetailsService(userDetailsService).
                 passwordEncoder(passwordEncoder);
+    }
+
+    private static class AllExceptUrlsStartedWith implements RequestMatcher {
+
+        private static final String[] ALLOWED_METHODS =
+                new String[] {"GET", "HEAD", "TRACE", "OPTIONS"};
+
+        private final String[] allowedUrls;
+
+        public AllExceptUrlsStartedWith(String... allowedUrls) {
+            this.allowedUrls = allowedUrls;
+        }
+
+        @Override
+        public boolean matches(HttpServletRequest request) {
+            // replicate default behavior (see CsrfFilter.DefaultRequiresCsrfMatcher class)
+            String method = request.getMethod();
+            for (String allowedMethod : ALLOWED_METHODS) {
+                if (allowedMethod.equals(method)) {
+                    return false;
+                }
+            }
+
+            // apply our own exceptions
+            String uri = request.getRequestURI();
+            for (String allowedUrl : allowedUrls) {
+                if (uri.startsWith(allowedUrl)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
     }
 }
