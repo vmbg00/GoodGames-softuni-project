@@ -73,4 +73,9 @@ public class UserServiceImpl implements UserService {
             return user.get().getPassword().equals(password);
         }
     }
+
+    @Override
+    public boolean userNameExists(String username) {
+       return this.userRepository.findByUsername(username).isPresent();
+    }
 }

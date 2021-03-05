@@ -7,4 +7,5 @@ public interface UserService {
 
     boolean authenticate(String username, String password);
 
+    boolean userNameExists(String username);
 }

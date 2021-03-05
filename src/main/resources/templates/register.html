@@ -107,6 +107,7 @@
     <form th:action="@{/users/register}" method="POST" th:object="${registerBindingModel}">
         <h2>Register</h2>
         <p>Please fill in this form to create an account!</p>
+        <small th:if="${userExistsError}" class="text-center text-light form-text bg-danger rounded">User already exists</small>
         <hr>
         <div class="form-group">
             <div class="input-group">

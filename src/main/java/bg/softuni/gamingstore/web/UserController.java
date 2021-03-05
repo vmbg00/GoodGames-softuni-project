@@ -76,11 +76,19 @@ public class UserController {
             redirectAttributes.addFlashAttribute("registerBindingModel", registerBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerBindingModel", bindingResult);
 
-            return "redirect:register";
+            return "redirect:/users/register";
         }
+
+        if (this.userService.userNameExists(registerBindingModel.getUsername())){
+            redirectAttributes.addFlashAttribute("registerBindingModel", registerBindingModel);
+            redirectAttributes.addFlashAttribute("userExistsError", true);
+
+            return "redirect:/users/register";
+        }
+
         this.userService.register(this.modelMapper.map(registerBindingModel, RegisterServiceModel.class));
 
-        return "redirect:/";
+        return "redirect:/users/login";
     }
 
     @PostMapping("/login-error")
