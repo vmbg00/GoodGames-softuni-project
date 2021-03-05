@@ -14,8 +14,19 @@ public class GameEntity extends BaseEntity{
     private BigDecimal price;
     private String platform;
     private GenreEnum genre;
+    private String imageUrl;
 
     public GameEntity() {
+    }
+
+    @Column(name = "image_url")
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public GameEntity setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+        return this;
     }
 
     @Column(unique = true, nullable = false)

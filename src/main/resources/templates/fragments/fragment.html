@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <nav th:fragment="navbar" class="nk-navbar nk-navbar-top nk-navbar-sticky nk-navbar-autohide">
     <div class="container">
@@ -64,24 +64,18 @@
 
                     </a><ul class="dropdown">
                     <li>
-                        <a href="store-product">
-                            Product
-
-                        </a>
-                    </li>
-                    <li>
-                        <a href="store-catalog">
-                            Catalog
-
-                        </a>
-                    </li>
-                    <li>
                         <a href="store-cart">
                             Cart
 
                         </a>
                     </li>
                 </ul>
+                </li>
+                <li>
+                    <a sec:authorize="isAuthenticated()" href="/users/games">
+                        Your games
+
+                    </a>
                 </li>
                 <li>
                     <form th:action="@{/users/logout}" method="POST">

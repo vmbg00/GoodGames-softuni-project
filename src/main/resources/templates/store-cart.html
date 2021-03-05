@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
-    
-<html lang="en">
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -78,7 +78,7 @@
     
     
 <!-- START: Top Contacts -->
-<div class="nk-contacts-top">
+<div th:replace="fragments/fragment :: topContacts" class="nk-contacts-top">
     <div class="container">
         <div class="nk-contacts-left">
             <ul class="nk-social-links">
@@ -166,7 +166,7 @@
                         
                         <div class="nk-gap-2"></div>
                         <div class="text-center">
-                            <a href="store-checkout.html" class="nk-btn nk-btn-rounded nk-btn-color-main-1 nk-btn-hover-color-white">Proceed to Checkout</a>
+                            <a href="store-checkout" class="nk-btn nk-btn-rounded nk-btn-color-main-1 nk-btn-hover-color-white">Proceed to Checkout</a>
                         </div>
                     </div>
                 </li>
@@ -187,7 +187,7 @@
             .nk-navbar-transparent
             .nk-navbar-autohide
     -->
-    <nav class="nk-navbar nk-navbar-top nk-navbar-sticky nk-navbar-autohide">
+    <nav th:replace="fragments/fragment :: navbar" class="nk-navbar nk-navbar-top nk-navbar-sticky nk-navbar-autohide">
         <div class="container">
             <div class="nk-nav-table">
                 
@@ -619,7 +619,7 @@
         </div>
 
         <div class="nk-gap-2"></div>
-        <a class="nk-btn nk-btn-rounded nk-btn-color-main-1 float-right" href="store-checkout.html">Proceed to Checkout</a>
+        <a class="nk-btn nk-btn-rounded nk-btn-color-main-1 float-right" href="store-checkout">Proceed to Checkout</a>
         <div class="clearfix"></div>
     </div>
 </div>
@@ -629,7 +629,7 @@
 
         
             <!-- START: Footer -->
-<footer class="nk-footer">
+<footer th:replace="fragments/fragment :: footer" class="nk-footer">
 
     <div class="container">
         <div class="nk-gap-3"></div>
