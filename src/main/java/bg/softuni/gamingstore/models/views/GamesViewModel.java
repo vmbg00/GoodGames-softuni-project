@@ -1,11 +1,21 @@
 package bg.softuni.gamingstore.models.views;
 
 public class GamesViewModel {
+    private Long id;
     private String imageUrl;
     private String name;
     private String price;
 
     public GamesViewModel() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public GamesViewModel setId(Long id) {
+        this.id = id;
+        return this;
     }
 
     public String getImageUrl() {

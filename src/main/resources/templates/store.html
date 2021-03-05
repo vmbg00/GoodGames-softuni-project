@@ -481,13 +481,13 @@
                         <div class="nk-gap-1"></div>
                         <div class="nk-product-price" th:text="|€ *{price}|"></div>
                         <div class="nk-gap-1"></div>
-                        <a href="/store/add" class="alert-link">
+                        <a th:href="@{/store/add/{id}(id=*{id})}" class="alert-link">
                             <button type="button" class="btn btn-primary btn-lg pull-right">
                                 ADD TO CART
                             </button>
                         </a>
                         <div class="nk-gap-1"></div>
-                        <a sec:authorize="hasRole('ROLE_ADMIN')" href="/store/delete" class="alert-link">
+                        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/store/delete/{id}(id=*{id})}" class="alert-link">
                             <button type="button" class="btn btn-danger btn-lg pull-right">
                                 DELETE GAME
                             </button>
@@ -512,18 +512,18 @@
         <div class="col-lg-6">
             <div class="nk-product-cat-2">
                 <a class="nk-product-image" href="store-product.html">
-                    <img src="assets/images/product-7-md.jpg" alt="With what mingled joy">
+                    <img src="https://i.redd.it/3ygdqb46ua451.png" alt="With what mingled joy">
                 </a>
                 <div class="nk-product-cont">
-                    <h3 class="nk-product-title h5"><a href="store-product.html">With what mingled joy</a></h3>
+                    <h3 class="nk-product-title h5">Glory Hold</h3>
                     <div class="nk-gap-1"></div>
                     <div class="nk-product-rating" data-rating="3.5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i> <i class="far fa-star"></i></div>
                     <div class="nk-gap-1"></div>
-                    She clutched the matron by the arm, and forcing her into a chair by the bedside, was about to speak, when looking round, she caught sight of the two old women
+                    Oh, dear!Oh, dear!How men should beware of wicked
                     <div class="nk-gap-2"></div>
-                    <div class="nk-product-price">€ 14.00</div>
+                    <div class="nk-product-price">€ 11.00</div>
                     <div class="nk-gap-1"></div>
-                    <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                    <a th:href="@{/store/add/6}" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
                 </div>
             </div>
         </div>
@@ -532,58 +532,18 @@
         <div class="col-lg-6">
             <div class="nk-product-cat-2">
                 <a class="nk-product-image" href="store-product.html">
-                    <img src="assets/images/product-8-md.jpg" alt="She was bouncing away">
+                    <img src="https://i.pinimg.com/236x/45/e4/a7/45e4a7d5e9f6853e8fe05cbce5105517--zombie-party-zombie-app.jpg" alt="She was bouncing away">
                 </a>
                 <div class="nk-product-cont">
-                    <h3 class="nk-product-title h5"><a href="store-product.html">She was bouncing away</a></h3>
+                    <h3 class="nk-product-title h5">Plants vs Zombies</h3>
                     <div class="nk-gap-1"></div>
                     <div class="nk-product-rating" data-rating="4.5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i></div>
                     <div class="nk-gap-1"></div>
-                    For good, too; though, in consequence of my previous emotions, I was still occasionally seized with a stormy sob. After we had jogged on for some little time
+                    Is your poor brother recovered of his rack - punch ?
                     <div class="nk-gap-2"></div>
-                    <div class="nk-product-price">€ 20.00</div>
+                    <div class="nk-product-price">€ 28.00</div>
                     <div class="nk-gap-1"></div>
-                    <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="col-lg-6">
-            <div class="nk-product-cat-2">
-                <a class="nk-product-image" href="store-product.html">
-                    <img src="assets/images/product-9-md.jpg" alt="The word was">
-                </a>
-                <div class="nk-product-cont">
-                    <h3 class="nk-product-title h5"><a href="store-product.html">The word was</a></h3>
-                    <div class="nk-gap-1"></div>
-                    <div class="nk-product-rating" data-rating="5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
-                    <div class="nk-gap-1"></div>
-                    With what mingled joy and sorrow do I take up the pen to write to my dearest friend! Oh, what a change between to-day and yesterday! Now I am friendless and alone
-                    <div class="nk-gap-2"></div>
-                    <div class="nk-product-price">€ 23.00</div>
-                    <div class="nk-gap-1"></div>
-                    <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="col-lg-6">
-            <div class="nk-product-cat-2">
-                <a class="nk-product-image" href="store-product.html">
-                    <img src="assets/images/product-10-md.jpg" alt="My mother was so much">
-                </a>
-                <div class="nk-product-cont">
-                    <h3 class="nk-product-title h5"><a href="store-product.html">My mother was so much</a></h3>
-                    <div class="nk-gap-1"></div>
-                    <div class="nk-product-rating" data-rating="3.5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i> <i class="far fa-star"></i></div>
-                    <div class="nk-gap-1"></div>
-                    A hundred thousand grateful loves to your dear papa and mamma . Is your poor brother recovered of his rack - punch ? Oh, dear!Oh, dear!How men should beware of wicked
-                    <div class="nk-gap-2"></div>
-                    <div class="nk-product-price">€ 32.00</div>
-                    <div class="nk-gap-1"></div>
-                    <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                    <a th:href="@{/store/add/5}" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
                 </div>
             </div>
         </div>

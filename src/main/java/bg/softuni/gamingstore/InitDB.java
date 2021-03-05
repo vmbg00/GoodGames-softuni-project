@@ -70,10 +70,10 @@ public class InitDB implements CommandLineRunner {
             GameEntity game5 = new GameEntity();
             GameEntity game6 = new GameEntity();
 
-            game1.setName("WITH WHAT MINGLED JOY");
-            game2.setName("SHE WAS BOUNCING AWAY");
-            game3.setName("THE WORD WAS");
-            game4.setName("Deadlock");
+            game1.setName("IT'S BANANAS");
+            game2.setName("PIANO HERO TILES");
+            game3.setName("SMASH & CRASH");
+            game4.setName("RICH GARDEN");
             game5.setName("Plants vs Zombies");
             game6.setName("Glory Hold");
 
