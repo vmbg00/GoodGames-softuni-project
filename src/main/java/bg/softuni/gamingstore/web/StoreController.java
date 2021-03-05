@@ -11,4 +11,9 @@ public class StoreController {
         return "store";
     }
 
+    @GetMapping("/store-product")
+    public String storeProduct(){
+        return "store-product";
+    }
+
 }
