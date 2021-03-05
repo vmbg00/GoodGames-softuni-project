@@ -8,6 +8,11 @@ import bg.softuni.gamingstore.repositories.RolesRepository;
 import bg.softuni.gamingstore.repositories.UserRepository;
 import bg.softuni.gamingstore.services.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +26,15 @@ public class UserServiceImpl implements UserService {
     private final RolesRepository rolesRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+    private final GoodGamesUserServiceImpl goodGamesUserService;
 
-    public UserServiceImpl(UserRepository userRepository, RolesRepository rolesRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, RolesRepository rolesRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, GoodGamesUserServiceImpl goodGamesUserService) {
         this.userRepository = userRepository;
         this.rolesRepository = rolesRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
+        this.goodGamesUserService = goodGamesUserService;
     }
 
 
@@ -41,7 +49,17 @@ public class UserServiceImpl implements UserService {
                 .setGames(null)
                 .setPassword(this.passwordEncoder.encode(newUser.getPassword()));
 
-        this.userRepository.save(userEntity);
+        userEntity = this.userRepository.save(userEntity);
+
+        UserDetails princip = this.goodGamesUserService.loadUserByUsername(userEntity.getUsername());
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                princip,
+                userEntity.getPassword(),
+                princip.getAuthorities()
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
     @Override

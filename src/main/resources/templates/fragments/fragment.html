@@ -84,10 +84,12 @@
                 </ul>
                 </li>
                 <li>
-                    <a sec:authorize="${isAuthenticated()}" th:href="@{/users/logout}">
-                        Logout
+                    <form th:action="@{/users/logout}" method="POST">
+                        <a sec:authorize="${isAuthenticated()}" th:href="@{/users/logout}">
+                            Logout
 
-                    </a>
+                        </a>
+                    </form>
                 </li>
                 <li sec:authorize="${!isAuthenticated()}" class=" nk-drop-item">
                     <a>
