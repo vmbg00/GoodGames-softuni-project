@@ -1,17 +1,21 @@
 package bg.softuni.gamingstore.web;
 
 import bg.softuni.gamingstore.services.GameService;
+import bg.softuni.gamingstore.services.ShoppingCartService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class StoreController {
 
     private final GameService gameService;
+    private final ShoppingCartService shoppingCartService;
 
-    public StoreController(GameService gameService) {
+    public StoreController(GameService gameService, ShoppingCartService shoppingCartService) {
         this.gameService = gameService;
+        this.shoppingCartService = shoppingCartService;
     }
 
     @GetMapping("/store")
@@ -20,6 +24,13 @@ public class StoreController {
         model.addAttribute("availableGames", this.gameService.getAllGames());
 
         return "store";
+    }
+
+    @GetMapping("/store/add/{id}")
+    public String addToCart(@PathVariable Long id){
+        this.shoppingCartService.addToCart(id);
+
+        return "redirect:/store";
     }
 
     @GetMapping("/store-product")
