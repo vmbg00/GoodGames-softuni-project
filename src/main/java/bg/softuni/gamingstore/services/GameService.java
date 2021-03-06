@@ -9,4 +9,6 @@ public interface GameService {
     List<GamesViewModel> getAllGames();
 
     void deleteGame(Long id);
+
+    long countAllGames();
 }

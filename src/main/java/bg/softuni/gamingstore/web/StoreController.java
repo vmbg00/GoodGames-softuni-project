@@ -22,6 +22,7 @@ public class StoreController {
     public String store(Model model){
 
         model.addAttribute("availableGames", this.gameService.getAllGames());
+        model.addAttribute("availableGamesCount", this.gameService.countAllGames());
 
         return "store";
     }
