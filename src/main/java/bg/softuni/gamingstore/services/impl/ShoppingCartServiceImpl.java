@@ -11,8 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
@@ -30,9 +28,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public void addToCart(Long id) {
         ShoppingCartEntity shoppingCartEntity = new ShoppingCartEntity();
-        List<GameEntity> list = new ArrayList<>();
         GameEntity game = this.gamesRepository.findById(id).get();
-        list.add(game);
         String username;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -43,7 +39,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
 
         UserEntity user = this.userRepository.findByUsername(username).get();
-        shoppingCartEntity.setGames(list);
+        shoppingCartEntity.setGames(game);
         shoppingCartEntity.setUser(user);
         this.shoppingCartRepository.save(shoppingCartEntity);
     }

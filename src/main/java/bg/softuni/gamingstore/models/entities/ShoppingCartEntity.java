@@ -1,22 +1,23 @@
 package bg.softuni.gamingstore.models.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import java.util.List;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "shopping_carts")
 public class ShoppingCartEntity extends BaseEntity{
 
     private UserEntity user;
-    private List<GameEntity> games;
+    private GameEntity games;
 
     public ShoppingCartEntity() {
     }
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public UserEntity getUser() {
         return user;
     }
@@ -26,12 +27,13 @@ public class ShoppingCartEntity extends BaseEntity{
         return this;
     }
 
-    @ManyToMany
-    public List<GameEntity> getGames() {
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    public GameEntity getGames() {
         return games;
     }
 
-    public ShoppingCartEntity setGames(List<GameEntity> games) {
+    public ShoppingCartEntity setGames(GameEntity games) {
         this.games = games;
         return this;
     }

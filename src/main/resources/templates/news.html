@@ -1112,10 +1112,10 @@
 </div>
 <div class="nk-widget nk-widget-highlighted">
     <h4 class="nk-widget-title"><span><span class="text-main-1">Latest</span> Screenshots</span></h4>
-    <div th:each="p : ${pictures}" th:object="${p}" class="nk-widget-content">
+    <div class="nk-widget-content">
         <div class="nk-popup-gallery">
             <div class="row sm-gap vertical-gap">
-                <div class="col-sm-6">
+                <div th:each="p : ${pictures}" th:object="${p}" class="col-sm-6">
                     <div class="nk-gallery-item-box">
                         <a th:href="*{url}" class="nk-gallery-item" data-size="1016x572">
                             <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
