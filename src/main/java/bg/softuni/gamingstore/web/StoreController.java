@@ -41,18 +41,22 @@ public class StoreController {
         return "redirect:/store";
     }
 
-    @GetMapping("/store-product")
-    public String storeProduct(){
-        return "store-product";
-    }
-
     @GetMapping("/store-cart")
-    public String storeCart(){
+    public String storeCart(Model model){
+
+        model.addAttribute("gamesInCart", this.shoppingCartService.getAllGamesInCart());
+
         return "store-cart";
     }
 
+
+
     @GetMapping("/store-checkout")
-    public String storeCheckout(){
+    public String storeCheckout(Model model){
+
+        model.addAttribute("gamesInCart", this.shoppingCartService.getAllGamesInCart());
+        model.addAttribute("totalPriceOfAllGames", this.shoppingCartService.totalPriceOfAllGames());
+
         return "store-checkout";
     }
 

@@ -442,12 +442,12 @@
     <ul class="nk-breadcrumbs">
         
         
-        <li><a href="home.html">Home</a></li>
+        <li><a href="/">Home</a></li>
         
         
         <li><span class="fa fa-angle-right"></span></li>
         
-        <li><a href="store.html">Store</a></li>
+        <li><a href="store">Store</a></li>
         
         
         <li><span class="fa fa-angle-right"></span></li>
@@ -470,10 +470,10 @@
             <table class="table nk-store-cart-products">
                 <tbody>
                     
-                        <tr>
+                        <tr th:each="g : ${gamesInCart}" th:object="${g}">
                             <td class="nk-product-cart-thumb">
-                                <a href="store-product.html" class="nk-image-box-1 nk-post-image">
-                                    <img src="assets/images/product-2-xs.jpg" alt="However, I have reason" width="115">
+                                <a class="nk-image-box-1 nk-post-image">
+                                    <img th:src="*{imageUrl}" alt="However, I have reason" width="115">
                                 </a>
                             </td>
                             <td class="nk-product-cart-title">
@@ -481,65 +481,14 @@
                                 <div class="nk-gap-1"></div>
 
                                 <h2 class="nk-post-title h4">
-                                    <a href="store-product.html">However, I have reason</a>
+                                    <a th:text="*{name}">However, I have reason</a>
                                 </h2>
                             </td>
                             <td class="nk-product-cart-price">
                                 <h5 class="h6">Price:</h5>
                                 <div class="nk-gap-1"></div>
 
-                                <strong>€ 32.00</strong>
-                            </td>
-                            <td class="nk-product-cart-quantity">
-                                <h5 class="h6">Quantity:</h5>
-                                <div class="nk-gap-1"></div>
-
-                                <div class="nk-form">
-                                    <input type="number" class="form-control" value="1" min="1" max="21">
-                                </div>
-                            </td>
-                            <td class="nk-product-cart-total">
-                                <h5 class="h6">Total:</h5>
-                                <div class="nk-gap-1"></div>
-
-                                <strong>€ 32.00</strong>
-                            </td>
-                            <td class="nk-product-cart-remove"><a href="#"><span class="ion-android-close"></span></a></td>
-                        </tr>
-                    
-                        <tr>
-                            <td class="nk-product-cart-thumb">
-                                <a href="store-product.html" class="nk-image-box-1 nk-post-image">
-                                    <img src="assets/images/product-4-xs.jpg" alt="She was bouncing" width="115">
-                                </a>
-                            </td>
-                            <td class="nk-product-cart-title">
-                                <h5 class="h6">Product:</h5>
-                                <div class="nk-gap-1"></div>
-
-                                <h2 class="nk-post-title h4">
-                                    <a href="store-product.html">She was bouncing</a>
-                                </h2>
-                            </td>
-                            <td class="nk-product-cart-price">
-                                <h5 class="h6">Price:</h5>
-                                <div class="nk-gap-1"></div>
-
-                                <strong>€ 20.00</strong>
-                            </td>
-                            <td class="nk-product-cart-quantity">
-                                <h5 class="h6">Quantity:</h5>
-                                <div class="nk-gap-1"></div>
-
-                                <div class="nk-form">
-                                    <input type="number" class="form-control" value="1" min="1" max="21">
-                                </div>
-                            </td>
-                            <td class="nk-product-cart-total">
-                                <h5 class="h6">Total:</h5>
-                                <div class="nk-gap-1"></div>
-
-                                <strong>€ 20.00</strong>
+                                <strong th:text="|€ *{price}|">€ 32.00</strong>
                             </td>
                             <td class="nk-product-cart-remove"><a href="#"><span class="ion-android-close"></span></a></td>
                         </tr>
@@ -550,7 +499,7 @@
 
         </div>
         <div class="nk-gap-1"></div>
-        <a class="nk-btn nk-btn-rounded nk-btn-color-white float-right" href="#">Update Cart</a>
+        <a class="nk-btn nk-btn-rounded nk-btn-color-white float-right" href="store-checkout">Checkout</a>
 
     </div>
 </div>

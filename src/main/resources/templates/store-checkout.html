@@ -442,17 +442,17 @@
     <ul class="nk-breadcrumbs">
         
         
-        <li><a href="home.html">Home</a></li>
+        <li><a href="/">Home</a></li>
         
         
         <li><span class="fa fa-angle-right"></span></li>
         
-        <li><a href="store.html">Store</a></li>
+        <li><a href="store">Store</a></li>
         
         
         <li><span class="fa fa-angle-right"></span></li>
         
-        <li><a href="store-cart.html">Cart</a></li>
+        <li><a href="store-cart">Cart</a></li>
         
         
         <li><span class="fa fa-angle-right"></span></li>
@@ -557,50 +557,24 @@
                 <thead class="thead-default">
                     <tr>
                         <th class="nk-product-cart-title">Product</th>
-                        <th class="nk-product-cart-total">Total</th>
+                        <th class="nk-product-cart-total">Price</th>
                     </tr>
                 </thead>
                 <tbody>
                     
-                        <tr>
-                            <td class="nk-product-cart-title">
-                                However, I have reason &times; 1
+                        <tr th:each="g : ${gamesInCart}" th:object="${g}">
+                            <td class="nk-product-cart-title"  th:text="*{name}">
+                                However, I have reason
                             </td>
-                            <td class="nk-product-cart-total">
+                            <td class="nk-product-cart-total" th:text="|€ *{price}|">
                                 € 32.00
                             </td>
                         </tr>
-                    
-                        <tr>
-                            <td class="nk-product-cart-title">
-                                She was bouncing &times; 1
-                            </td>
-                            <td class="nk-product-cart-total">
-                                € 20.00
-                            </td>
-                        </tr>
-                    
-                    <tr class="nk-store-cart-totals-subtotal">
-                        <td>
-                            Subtotal
-                        </td>
-                        <td>
-                            € 52.00
-                        </td>
-                    </tr>
-                    <tr class="nk-store-cart-totals-shipping">
-                        <td>
-                            Shipping
-                        </td>
-                        <td>
-                            Free Shipping
-                        </td>
-                    </tr>
                     <tr class="nk-store-cart-totals-total">
                         <td>
                             Total
                         </td>
-                        <td>
+                        <td th:text="|€ ${totalPriceOfAllGames}.00|">
                             € 52.00
                         </td>
                     </tr>
