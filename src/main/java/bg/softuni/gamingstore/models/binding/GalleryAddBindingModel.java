@@ -1,13 +1,16 @@
 package bg.softuni.gamingstore.models.binding;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class GalleryAddBindingModel {
 
     private String title;
     private String description;
-    private String url;
+    private MultipartFile url;
 
     public GalleryAddBindingModel() {
     }
@@ -34,12 +37,12 @@ public class GalleryAddBindingModel {
         return this;
     }
 
-    @NotBlank(message = "Cannot be blank")
-    public String getUrl() {
+    @NotNull
+    public MultipartFile getUrl() {
         return url;
     }
 
-    public GalleryAddBindingModel setUrl(String url) {
+    public GalleryAddBindingModel setUrl(MultipartFile url) {
         this.url = url;
         return this;
     }

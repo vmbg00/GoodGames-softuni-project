@@ -1,11 +1,13 @@
 package bg.softuni.gamingstore.models.services;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class GalleryAddServiceModel {
 
     private Long id;
     private String title;
     private String description;
-    private String url;
+    private MultipartFile img;
 
     public GalleryAddServiceModel() {
     }
@@ -37,12 +39,12 @@ public class GalleryAddServiceModel {
         return this;
     }
 
-    public String getUrl() {
-        return url;
+    public MultipartFile getImg() {
+        return img;
     }
 
-    public GalleryAddServiceModel setUrl(String url) {
-        this.url = url;
+    public GalleryAddServiceModel setUrl(MultipartFile img) {
+        this.img = img;
         return this;
     }
 }
