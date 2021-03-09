@@ -11,4 +11,6 @@ public interface ShoppingCartService {
     List<ShoppingCartGamesViewModel> getAllGamesInCart();
 
     BigDecimal totalPriceOfAllGames();
+
+    void clearCurrentUserCart();
 }

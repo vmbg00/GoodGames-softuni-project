@@ -6,11 +6,8 @@ import bg.softuni.gamingstore.models.entities.UserEntity;
 import bg.softuni.gamingstore.models.views.ShoppingCartGamesViewModel;
 import bg.softuni.gamingstore.repositories.GamesRepository;
 import bg.softuni.gamingstore.repositories.ShoppingCartRepository;
-import bg.softuni.gamingstore.repositories.UserRepository;
 import bg.softuni.gamingstore.services.ShoppingCartService;
-import org.modelmapper.ModelMapper;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import bg.softuni.gamingstore.services.UserService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -22,44 +19,28 @@ import java.util.stream.Collectors;
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     private final GamesRepository gamesRepository;
-    private final UserRepository userRepository;
-    private final ModelMapper modelMapper;
     private final ShoppingCartRepository shoppingCartRepository;
+    private final UserService userService;
 
-    public ShoppingCartServiceImpl(GamesRepository gamesRepository, UserRepository userRepository, ModelMapper modelMapper, ShoppingCartRepository shoppingCartRepository) {
+    public ShoppingCartServiceImpl(GamesRepository gamesRepository, ShoppingCartRepository shoppingCartRepository, UserService userService) {
         this.gamesRepository = gamesRepository;
-        this.userRepository = userRepository;
-        this.modelMapper = modelMapper;
         this.shoppingCartRepository = shoppingCartRepository;
+        this.userService = userService;
     }
 
     @Override
     public void addToCart(Long id) {
         ShoppingCartEntity shoppingCartEntity = new ShoppingCartEntity();
         GameEntity game = this.gamesRepository.findById(id).get();
-        UserEntity user = getUserEntity();
+        UserEntity user = this.userService.getUserEntity();
         shoppingCartEntity.setGames(game);
         shoppingCartEntity.setUser(user);
         this.shoppingCartRepository.save(shoppingCartEntity);
     }
 
-    private UserEntity getUserEntity() {
-        String username;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-
-        UserEntity user = this.userRepository.findByUsername(username).get();
-        return user;
-    }
-
     @Override
     public List<ShoppingCartGamesViewModel> getAllGamesInCart() {
-        List<ShoppingCartGamesViewModel> viewModels = this.shoppingCartRepository.findAllByUser(getUserEntity()).stream()
+        List<ShoppingCartGamesViewModel> viewModels = this.shoppingCartRepository.findAllByUser(this.userService.getUserEntity()).stream()
                 .map(shoppingCartEntity -> {
                     ShoppingCartGamesViewModel viewModel = new ShoppingCartGamesViewModel();
 
@@ -75,7 +56,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public BigDecimal totalPriceOfAllGames() {
-        List<ShoppingCartEntity> allByUser = this.shoppingCartRepository.findAllByUser(getUserEntity());
+        List<ShoppingCartEntity> allByUser = this.shoppingCartRepository.findAllByUser(this.userService.getUserEntity());
 
         int result = 0;
         for (ShoppingCartEntity shoppingCartEntity : allByUser) {
@@ -83,5 +64,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
 
         return BigDecimal.valueOf(result);
+    }
+
+    @Override
+    public void clearCurrentUserCart() {
+        UserEntity userEntity = this.userService.getUserEntity();
+        List<ShoppingCartEntity> all = this.shoppingCartRepository.findAllByUser(userEntity);
+
+        for (ShoppingCartEntity shoppingCartEntity : all) {
+            this.shoppingCartRepository.delete(shoppingCartEntity);
+        }
     }
 }

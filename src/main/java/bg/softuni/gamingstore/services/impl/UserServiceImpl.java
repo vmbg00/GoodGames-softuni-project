@@ -63,19 +63,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean authenticate(String username, String password) {
-        Optional<UserEntity> user = this.userRepository.findByUsername(username);
-
-        if (user.isEmpty()){
-            return false;
-        }
-        else {
-            return user.get().getPassword().equals(password);
-        }
+    public boolean userNameExists(String username) {
+       return this.userRepository.findByUsername(username).isPresent();
     }
 
     @Override
-    public boolean userNameExists(String username) {
-       return this.userRepository.findByUsername(username).isPresent();
+    public UserEntity getUserEntity() {
+        String username;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        UserEntity user = this.userRepository.findByUsername(username).get();
+        return user;
     }
 }

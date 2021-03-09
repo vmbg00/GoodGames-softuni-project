@@ -11,4 +11,6 @@ public interface GameService {
     void deleteGame(Long id);
 
     long countAllGames();
+
+    void addGamesToUser();
 }

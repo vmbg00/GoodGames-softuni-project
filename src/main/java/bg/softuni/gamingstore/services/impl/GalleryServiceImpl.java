@@ -5,6 +5,7 @@ import bg.softuni.gamingstore.models.services.GalleryAddServiceModel;
 import bg.softuni.gamingstore.models.views.GalleryViewModel;
 import bg.softuni.gamingstore.repositories.PicturesRepository;
 import bg.softuni.gamingstore.services.GalleryService;
+import bg.softuni.gamingstore.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,12 @@ import java.util.stream.Collectors;
 public class GalleryServiceImpl implements GalleryService {
 
     private final PicturesRepository picturesRepository;
+    private final UserService userService;
     private final ModelMapper modelMapper;
 
-    public GalleryServiceImpl(PicturesRepository picturesRepository, ModelMapper modelMapper) {
+    public GalleryServiceImpl(PicturesRepository picturesRepository, UserService userService, ModelMapper modelMapper) {
         this.picturesRepository = picturesRepository;
+        this.userService = userService;
         this.modelMapper = modelMapper;
     }
 
@@ -27,6 +30,7 @@ public class GalleryServiceImpl implements GalleryService {
         PictureEntity pictureEntity = this.modelMapper.map(galleryAddServiceModel, PictureEntity.class);
 
         pictureEntity.setId(galleryAddServiceModel.getId());
+        pictureEntity.setUserEntity(this.userService.getUserEntity());
 
         this.picturesRepository.save(pictureEntity);
     }
