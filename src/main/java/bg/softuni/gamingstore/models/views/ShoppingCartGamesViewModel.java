@@ -3,11 +3,21 @@ package bg.softuni.gamingstore.models.views;
 import java.math.BigDecimal;
 
 public class ShoppingCartGamesViewModel {
+    private Long id;
     private String imageUrl;
     private String name;
     private BigDecimal price;
 
     public ShoppingCartGamesViewModel() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public ShoppingCartGamesViewModel setId(Long id) {
+        this.id = id;
+        return this;
     }
 
     public String getImageUrl() {

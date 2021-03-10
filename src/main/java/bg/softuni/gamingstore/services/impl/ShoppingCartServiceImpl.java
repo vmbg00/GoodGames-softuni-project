@@ -44,6 +44,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 .map(shoppingCartEntity -> {
                     ShoppingCartGamesViewModel viewModel = new ShoppingCartGamesViewModel();
 
+                    viewModel.setId(shoppingCartEntity.getGames().getId());
                     viewModel.setName(shoppingCartEntity.getGames().getName());
                     viewModel.setImageUrl(shoppingCartEntity.getGames().getImageUrl());
                     viewModel.setPrice(shoppingCartEntity.getGames().getPrice());
@@ -73,6 +74,18 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         for (ShoppingCartEntity shoppingCartEntity : all) {
             this.shoppingCartRepository.delete(shoppingCartEntity);
+        }
+    }
+
+    @Override
+    public void removeItemFromCart(Long id) {
+        List<ShoppingCartEntity> allByUser = this.shoppingCartRepository.findAllByUser(this.userService.getUserEntity());
+
+        for (ShoppingCartEntity shoppingCartEntity : allByUser) {
+            if (shoppingCartEntity.getGames().getId().equals(id)){
+                GameEntity gameEntity = this.gamesRepository.findById(id).get();
+                this.shoppingCartRepository.deleteShoppingCartEntityByGames_Id(gameEntity.getId());
+            }
         }
     }
 }

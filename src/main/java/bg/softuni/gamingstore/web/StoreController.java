@@ -1,11 +1,13 @@
 package bg.softuni.gamingstore.web;
 
 import bg.softuni.gamingstore.models.binding.BillingHistoryBindingModel;
+import bg.softuni.gamingstore.models.entities.enums.RoleEnums;
 import bg.softuni.gamingstore.models.services.BillingHistoryServiceModel;
 import bg.softuni.gamingstore.services.BillingHistoryService;
 import bg.softuni.gamingstore.services.GameService;
 import bg.softuni.gamingstore.services.ShoppingCartService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -58,6 +60,13 @@ public class StoreController {
         model.addAttribute("gamesInCart", this.shoppingCartService.getAllGamesInCart());
 
         return "store-cart";
+    }
+
+    @GetMapping("/store-cart/remove/{id}")
+    public String removeItem(@PathVariable Long id){
+        this.shoppingCartService.removeItemFromCart(id);
+
+        return "redirect:/store-cart";
     }
 
     @GetMapping("/store-checkout")

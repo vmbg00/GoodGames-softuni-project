@@ -58,6 +58,12 @@ public class UserController {
 //        }
 //    }
 
+
+    @GetMapping("/games")
+    public String allGames(){
+        return "games";
+    }
+
     @GetMapping("/register")
     public String register(Model model){
         if (!model.containsAttribute("registerBindingModel")){

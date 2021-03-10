@@ -13,4 +13,6 @@ public interface ShoppingCartService {
     BigDecimal totalPriceOfAllGames();
 
     void clearCurrentUserCart();
+
+    void removeItemFromCart(Long id);
 }
