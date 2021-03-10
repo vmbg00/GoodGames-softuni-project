@@ -1,9 +1,12 @@
 package bg.softuni.gamingstore.services.impl;
 
+import bg.softuni.gamingstore.models.entities.GameEntity;
 import bg.softuni.gamingstore.models.entities.RoleEntity;
 import bg.softuni.gamingstore.models.entities.UserEntity;
 import bg.softuni.gamingstore.models.entities.enums.RoleEnums;
 import bg.softuni.gamingstore.models.services.RegisterServiceModel;
+import bg.softuni.gamingstore.models.views.UserOwnedGamesViewModel;
+import bg.softuni.gamingstore.repositories.GamesRepository;
 import bg.softuni.gamingstore.repositories.RolesRepository;
 import bg.softuni.gamingstore.repositories.UserRepository;
 import bg.softuni.gamingstore.services.UserService;
@@ -16,21 +19,25 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final GamesRepository gamesRepository;
     private final RolesRepository rolesRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final GoodGamesUserServiceImpl goodGamesUserService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RolesRepository rolesRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, GoodGamesUserServiceImpl goodGamesUserService) {
+    public UserServiceImpl(UserRepository userRepository, GamesRepository gamesRepository, RolesRepository rolesRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, GoodGamesUserServiceImpl goodGamesUserService) {
         this.userRepository = userRepository;
+        this.gamesRepository = gamesRepository;
         this.rolesRepository = rolesRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
@@ -80,5 +87,24 @@ public class UserServiceImpl implements UserService {
 
         UserEntity user = this.userRepository.findByUsername(username).get();
         return user;
+    }
+
+    @Override
+    public List<UserOwnedGamesViewModel> getAllUserGames() {
+        Optional<UserEntity> username = this.userRepository.findByUsername(getUserEntity().getUsername());
+
+        List<UserOwnedGamesViewModel> games = new ArrayList<>();
+        for (GameEntity game : username.get().getGames()) {
+            UserOwnedGamesViewModel gamesViewModel = new UserOwnedGamesViewModel();
+
+            gamesViewModel.setTitle(game.getName());
+            gamesViewModel.setPlatform(game.getPlatform());
+            gamesViewModel.setGenre(game.getGenre().toString());
+            gamesViewModel.setBoughtFor(game.getPrice().toString());
+
+            games.add(gamesViewModel);
+        }
+
+        return games;
     }
 }

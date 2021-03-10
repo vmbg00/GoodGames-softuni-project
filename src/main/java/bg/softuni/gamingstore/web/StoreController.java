@@ -47,7 +47,7 @@ public class StoreController {
         return "redirect:/store";
     }
 
-    @GetMapping("/store/delete/{id}")
+    @DeleteMapping("/store/delete/{id}")
     public String deleteGame(@PathVariable Long id){
         this.gameService.deleteGame(id);
 

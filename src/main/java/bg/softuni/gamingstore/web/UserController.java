@@ -60,7 +60,8 @@ public class UserController {
 
 
     @GetMapping("/games")
-    public String allGames(){
+    public String allGames(Model model){
+        model.addAttribute("allUserGames", this.userService.getAllUserGames());
         return "games";
     }
 

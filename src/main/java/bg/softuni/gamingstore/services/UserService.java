@@ -2,6 +2,9 @@ package bg.softuni.gamingstore.services;
 
 import bg.softuni.gamingstore.models.entities.UserEntity;
 import bg.softuni.gamingstore.models.services.RegisterServiceModel;
+import bg.softuni.gamingstore.models.views.UserOwnedGamesViewModel;
+
+import java.util.List;
 
 public interface UserService {
     void register(RegisterServiceModel map);
@@ -9,4 +12,6 @@ public interface UserService {
     boolean userNameExists(String username);
 
     UserEntity getUserEntity();
+
+    List<UserOwnedGamesViewModel> getAllUserGames();
 }
