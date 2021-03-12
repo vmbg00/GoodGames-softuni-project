@@ -3,15 +3,18 @@ package bg.softuni.gamingstore.services.impl;
 import bg.softuni.gamingstore.models.entities.GameEntity;
 import bg.softuni.gamingstore.models.entities.ShoppingCartEntity;
 import bg.softuni.gamingstore.models.entities.UserEntity;
+import bg.softuni.gamingstore.models.services.StoreAddGameServiceModel;
 import bg.softuni.gamingstore.models.views.GamesViewModel;
 import bg.softuni.gamingstore.repositories.GamesRepository;
 import bg.softuni.gamingstore.repositories.ShoppingCartRepository;
+import bg.softuni.gamingstore.services.CloudinaryService;
 import bg.softuni.gamingstore.services.GameService;
 import bg.softuni.gamingstore.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,12 +25,14 @@ public class GameServiceImpl implements GameService {
     private final ShoppingCartRepository shoppingCartRepository;
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final CloudinaryService cloudinaryService;
 
-    public GameServiceImpl(GamesRepository gamesRepository, ShoppingCartRepository shoppingCartRepository, UserService userService, ModelMapper modelMapper) {
+    public GameServiceImpl(GamesRepository gamesRepository, ShoppingCartRepository shoppingCartRepository, UserService userService, ModelMapper modelMapper, CloudinaryService cloudinaryService) {
         this.gamesRepository = gamesRepository;
         this.shoppingCartRepository = shoppingCartRepository;
         this.userService = userService;
         this.modelMapper = modelMapper;
+        this.cloudinaryService = cloudinaryService;
     }
 
     @Override
@@ -51,11 +56,21 @@ public class GameServiceImpl implements GameService {
         UserEntity userEntity = this.userService.getUserEntity();
         List<ShoppingCartEntity> userGames = this.shoppingCartRepository.findAllByUser(userEntity);
 
-        List<GameEntity> gameEntities = new ArrayList<>();
         for (ShoppingCartEntity userGame : userGames) {
-            gameEntities.add(userGame.getGames());
+            userEntity.getGames().add(userGame.getGames());
         }
-        userEntity.setGames(gameEntities);
 
+    }
+
+    @Override
+    public void addNewGameToStore(StoreAddGameServiceModel map) throws IOException {
+        GameEntity gameEntity = this.modelMapper.map(map, GameEntity.class);
+
+        MultipartFile img = map.getImageUrl();
+        String imageUrl = this.cloudinaryService.uploadImage(img);
+
+        gameEntity.setImageUrl(imageUrl);
+
+        this.gamesRepository.save(gameEntity);
     }
 }

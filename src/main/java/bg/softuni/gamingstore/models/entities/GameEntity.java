@@ -1,5 +1,6 @@
 package bg.softuni.gamingstore.models.entities;
 
+import bg.softuni.gamingstore.models.entities.enums.GamePlatformEnums;
 import bg.softuni.gamingstore.models.entities.enums.GenreEnum;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ public class GameEntity extends BaseEntity{
     private String name;
     private String description;
     private BigDecimal price;
-    private String platform;
+    private GamePlatformEnums platform;
     private GenreEnum genre;
     private String imageUrl;
 
@@ -49,12 +50,12 @@ public class GameEntity extends BaseEntity{
         return this;
     }
 
-    @Column(nullable = false)
-    public String getPlatform() {
+    @Enumerated(value = EnumType.STRING)
+    public GamePlatformEnums getPlatform() {
         return platform;
     }
 
-    public GameEntity setPlatform(String platform) {
+    public GameEntity setPlatform(GamePlatformEnums platform) {
         this.platform = platform;
         return this;
     }

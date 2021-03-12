@@ -3,6 +3,7 @@ package bg.softuni.gamingstore;
 import bg.softuni.gamingstore.models.entities.GameEntity;
 import bg.softuni.gamingstore.models.entities.RoleEntity;
 import bg.softuni.gamingstore.models.entities.UserEntity;
+import bg.softuni.gamingstore.models.entities.enums.GamePlatformEnums;
 import bg.softuni.gamingstore.models.entities.enums.GenreEnum;
 import bg.softuni.gamingstore.models.entities.enums.RoleEnums;
 import bg.softuni.gamingstore.repositories.GamesRepository;
@@ -98,12 +99,12 @@ public class InitDB implements CommandLineRunner {
             game5.setImageUrl("https://i.pinimg.com/236x/45/e4/a7/45e4a7d5e9f6853e8fe05cbce5105517--zombie-party-zombie-app.jpg");
             game6.setImageUrl("https://i.redd.it/3ygdqb46ua451.png");
 
-            game1.setPlatform("XBOX SERIES X");
-            game2.setPlatform("PC");
-            game3.setPlatform("PC");
-            game4.setPlatform("PS5");
-            game5.setPlatform("PS5");
-            game6.setPlatform("XBOX SERIES X");
+            game1.setPlatform(GamePlatformEnums.XBOX);
+            game2.setPlatform(GamePlatformEnums.XBOX);
+            game3.setPlatform(GamePlatformEnums.PS4);
+            game4.setPlatform(GamePlatformEnums.PC);
+            game5.setPlatform(GamePlatformEnums.PS4);
+            game6.setPlatform(GamePlatformEnums.PC);
 
             game1.setPrice(BigDecimal.valueOf(14));
             game2.setPrice(BigDecimal.valueOf(20));

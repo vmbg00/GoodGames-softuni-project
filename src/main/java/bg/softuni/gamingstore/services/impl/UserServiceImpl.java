@@ -28,16 +28,14 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final GamesRepository gamesRepository;
     private final RolesRepository rolesRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final GoodGamesUserServiceImpl goodGamesUserService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, GamesRepository gamesRepository, RolesRepository rolesRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, GoodGamesUserServiceImpl goodGamesUserService) {
+    public UserServiceImpl(UserRepository userRepository, RolesRepository rolesRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, GoodGamesUserServiceImpl goodGamesUserService) {
         this.userRepository = userRepository;
-        this.gamesRepository = gamesRepository;
         this.rolesRepository = rolesRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
@@ -98,7 +96,7 @@ public class UserServiceImpl implements UserService {
             UserOwnedGamesViewModel gamesViewModel = new UserOwnedGamesViewModel();
 
             gamesViewModel.setTitle(game.getName());
-            gamesViewModel.setPlatform(game.getPlatform());
+            gamesViewModel.setPlatform(game.getPlatform().toString());
             gamesViewModel.setGenre(game.getGenre().toString());
             gamesViewModel.setBoughtFor(game.getPrice().toString());
 

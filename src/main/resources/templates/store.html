@@ -182,17 +182,20 @@
                             </button>
                         </a>
                         <div class="nk-gap-1"></div>
-                        <form th:href="@{/store/delete/{id}(id=*{id})}" th:action="@{/store/delete/{id}(id=*{id})}" th:method="delete" >
+                        <form sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/store/delete/{id}(id=*{id})}" th:action="@{/store/delete/{id}(id=*{id})}" th:method="delete" >
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                             <button class="btn btn-danger btn-lg pull-right" type="submit" id="submitButton">DELETE GAME </button>
                         </form>
                     </div>
                 </div>
             </div></div>
-
         </div>
     </div>
-
+    <a sec:authorize="hasRole('ROLE_ADMIN')" href="/store/add-new-game" class="alert-link">
+        <button type="button" class="btn btn-secondary btn-lg pull-right">
+            ADD NEW GAME TO STORE
+        </button>
+    </a>
 
     <!-- END: Top 10 Best Sellers -->
 

@@ -1,13 +1,13 @@
 package bg.softuni.gamingstore.web;
 
 import bg.softuni.gamingstore.models.binding.BillingHistoryBindingModel;
-import bg.softuni.gamingstore.models.entities.enums.RoleEnums;
+import bg.softuni.gamingstore.models.binding.StoreAddGameBindingModel;
 import bg.softuni.gamingstore.models.services.BillingHistoryServiceModel;
+import bg.softuni.gamingstore.models.services.StoreAddGameServiceModel;
 import bg.softuni.gamingstore.services.BillingHistoryService;
 import bg.softuni.gamingstore.services.GameService;
 import bg.softuni.gamingstore.services.ShoppingCartService;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Controller
 public class StoreController {
@@ -93,6 +94,31 @@ public class StoreController {
                 (this.modelMapper.map(billingHistoryBindingModel, BillingHistoryServiceModel.class));
         this.gameService.addGamesToUser();
         this.shoppingCartService.clearCurrentUserCart();
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/store/add-new-game")
+    public String addGameToStore(Model model){
+        if (!model.containsAttribute("storeAddGameBindingModel")){
+            model.addAttribute("storeAddGameBindingModel", new StoreAddGameBindingModel());
+        }
+        return "store-add-game";
+    }
+
+    @PostMapping("/store/add-new-game")
+    public String addGameToStoreConfirm(@Valid StoreAddGameBindingModel storeAddGameBindingModel,
+                                        BindingResult bindingResult,
+                                        RedirectAttributes redirectAttributes) throws IOException {
+
+        if (bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("storeAddGameBindingModel", storeAddGameBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.storeAddGameBindingModel", bindingResult);
+
+            return "redirect:add-new-game";
+        }
+
+        this.gameService.addNewGameToStore(this.modelMapper.map(storeAddGameBindingModel, StoreAddGameServiceModel.class));
 
         return "redirect:/";
     }
