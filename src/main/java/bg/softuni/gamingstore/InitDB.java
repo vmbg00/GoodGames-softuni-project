@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class InitDB implements CommandLineRunner {
@@ -57,7 +58,7 @@ public class InitDB implements CommandLineRunner {
                     .setUsername("admin")
                     .setPassword(this.passwordEncoder.encode("12345"))
                     .setEmail("admin@gmail.com")
-                    .setRoles(List.of(admin, user))
+                    .setRoles(Set.of(admin, user))
                     .setGames(null);
 
             userRepository.save(userEntity);

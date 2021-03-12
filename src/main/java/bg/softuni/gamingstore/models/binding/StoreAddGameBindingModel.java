@@ -1,6 +1,5 @@
 package bg.softuni.gamingstore.models.binding;
 
-import bg.softuni.gamingstore.models.entities.enums.GenreEnum;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
@@ -11,7 +10,7 @@ public class StoreAddGameBindingModel {
     private String description;
     private BigDecimal price;
     private String platform;
-    private GenreEnum genre;
+    private String genre;
     private MultipartFile imageUrl;
 
     public StoreAddGameBindingModel() {
@@ -39,7 +38,7 @@ public class StoreAddGameBindingModel {
         return this;
     }
 
-    @DecimalMin("0")
+    @DecimalMin(value = "0", message = "Game price must be a positive number")
     public BigDecimal getPrice() {
         return price;
     }
@@ -49,7 +48,7 @@ public class StoreAddGameBindingModel {
         return this;
     }
 
-    @NotBlank(message = "Must be filled")
+    @NotBlank(message = "Must select a platform")
     public String getPlatform() {
         return platform;
     }
@@ -59,12 +58,12 @@ public class StoreAddGameBindingModel {
         return this;
     }
 
-    @NotNull
-    public GenreEnum getGenre() {
+    @NotBlank(message = "Must select a genre")
+    public String getGenre() {
         return genre;
     }
 
-    public StoreAddGameBindingModel setGenre(GenreEnum genre) {
+    public StoreAddGameBindingModel setGenre(String genre) {
         this.genre = genre;
         return this;
     }

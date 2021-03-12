@@ -4,9 +4,9 @@ import bg.softuni.gamingstore.models.entities.GameEntity;
 import bg.softuni.gamingstore.models.entities.RoleEntity;
 import bg.softuni.gamingstore.models.entities.UserEntity;
 import bg.softuni.gamingstore.models.entities.enums.RoleEnums;
+import bg.softuni.gamingstore.models.services.ChangeUserRoleServiceModel;
 import bg.softuni.gamingstore.models.services.RegisterServiceModel;
 import bg.softuni.gamingstore.models.views.UserOwnedGamesViewModel;
-import bg.softuni.gamingstore.repositories.GamesRepository;
 import bg.softuni.gamingstore.repositories.RolesRepository;
 import bg.softuni.gamingstore.repositories.UserRepository;
 import bg.softuni.gamingstore.services.UserService;
@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
         RoleEntity role = this.rolesRepository.findByName(RoleEnums.USER);
 
         userEntity
-                .setRoles(List.of(role))
+                .setRoles(Set.of(role))
                 .setGames(null)
                 .setPassword(this.passwordEncoder.encode(newUser.getPassword()));
 
@@ -104,5 +104,21 @@ public class UserServiceImpl implements UserService {
         }
 
         return games;
+    }
+
+    @Override
+    public List<UserEntity> getAllUsers() {
+        return this.userRepository.findAll();
+    }
+
+    @Override
+    public void changeUserRole(ChangeUserRoleServiceModel map) {
+        Optional<UserEntity> byUsername = this.userRepository.findByUsername(map.getUsername());
+
+        RoleEntity byName = this.rolesRepository.findByName(map.getRole());
+
+        byUsername.get().getRoles().add(byName);
+
+        this.userRepository.saveAndFlush(byUsername.get());
     }
 }

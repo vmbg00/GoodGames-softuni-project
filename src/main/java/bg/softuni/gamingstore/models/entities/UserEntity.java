@@ -2,6 +2,7 @@ package bg.softuni.gamingstore.models.entities;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -10,7 +11,7 @@ public class UserEntity extends BaseEntity{
     private String username;
     private String password;
     private String email;
-    private List<RoleEntity> roles;
+    private Set<RoleEntity> roles;
     private List<GameEntity> games;
 
     public UserEntity() {
@@ -47,11 +48,11 @@ public class UserEntity extends BaseEntity{
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
-    public List<RoleEntity> getRoles() {
+    public Set<RoleEntity> getRoles() {
         return roles;
     }
 
-    public UserEntity setRoles(List<RoleEntity> roles) {
+    public UserEntity setRoles(Set<RoleEntity> roles) {
         this.roles = roles;
         return this;
     }

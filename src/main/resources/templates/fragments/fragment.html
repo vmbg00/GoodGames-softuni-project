@@ -12,6 +12,20 @@
 
             <ul class="nk-nav nk-nav-right d-none d-lg-table-cell" data-nav-mobile="#nk-nav-mobile">
 
+                <li class=" nk-drop-item">
+                    <a sec:authorize="hasRole('ROLE_ADMIN')">
+                        Admin
+
+                    </a><ul class="dropdown">
+                    <li>
+                        <a href="/users/change-user-role">
+                            Add user role
+
+                        </a>
+                    </li>
+                </ul>
+                </li>
+
                 <li>
                     <a href="news">
                         News

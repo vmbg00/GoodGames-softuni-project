@@ -1,6 +1,8 @@
 package bg.softuni.gamingstore.web;
 
+import bg.softuni.gamingstore.models.binding.ChangeUserRoleBindingModel;
 import bg.softuni.gamingstore.models.binding.RegisterBindingModel;
+import bg.softuni.gamingstore.models.services.ChangeUserRoleServiceModel;
 import bg.softuni.gamingstore.models.services.RegisterServiceModel;
 import bg.softuni.gamingstore.services.UserService;
 import org.modelmapper.ModelMapper;
@@ -100,16 +102,43 @@ public class UserController {
 
     @PostMapping("/login-error")
     public ModelAndView failedLogin(@ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
-                                    String username){
+                                    String username,
+                                    RedirectAttributes redirectAttributes){
         ModelAndView modelAndView = new ModelAndView();
 
-        modelAndView.addObject("bad_credentials", true);
-        modelAndView.addObject("username", username);
 
-        modelAndView.setViewName("/login");
+        redirectAttributes.addFlashAttribute("bad_credentials", true);
+        redirectAttributes.addFlashAttribute("username", username);
+
+        modelAndView.setViewName("redirect:/users/login");
 
         return modelAndView;
     }
 
+    @GetMapping("/change-user-role")
+    public String changeRole(Model model){
+        if (!model.containsAttribute("changeUserRoleBindingModel")){
+            model.addAttribute("changeUserRoleBindingModel", new  ChangeUserRoleBindingModel());
+        }
+        model.addAttribute("allUsersList", this.userService.getAllUsers());
+        return "role-add";
+    }
+
+    @PostMapping("/change-user-role")
+    public String changeRoleConfirm(@Valid ChangeUserRoleBindingModel changeUserRoleBindingModel,
+                                    BindingResult bindingResult,
+                                    RedirectAttributes redirectAttributes){
+
+        if (bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("changeUserRoleBindingModel", changeUserRoleBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.changeUserRoleBindingModel", bindingResult);
+
+            return "redirect:/change-user-role";
+        }
+
+        this.userService.changeUserRole(this.modelMapper.map(changeUserRoleBindingModel, ChangeUserRoleServiceModel.class));
+
+        return "redirect:/";
+    }
 
 }

@@ -5,9 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
-    <title>GoodGames | Store add game</title>
+    <title>GoodGames | Add user role</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png"/>
@@ -104,50 +105,32 @@
 </head>
 <body>
 <div class="signup-form">
-    <form th:action="@{/store/add-new-game}" th:method="POST" th:object="${storeAddGameBindingModel}" enctype="multipart/form-data">
-        <h2>Add a new game</h2>
+    <form th:action="@{/users/change-user-role}" th:method="POST" th:object="${changeUserRoleBindingModel}">
+        <h2>Add user role</h2>
         <p>Admin only</p>
         <hr>
-        <div  class="form-group">
+        <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                <input th:field="*{name}" type="text" class="form-control" name="title" placeholder="Title" required="required">
-                <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" id="titleError" class="form-text bg-danger rounded"></small>
+                <select type="text" class="form-control" name="username" required="required">
+                    <option value="">Select a user...</option>
+                    <option th:each="u : ${allUsersList}" th:object="${u}"
+                    th:value="${u.username}" th:text="${u.username}"></option>
+                </select>
+                <small id="usernameError" class="form-text bg-danger rounded"></small>
+            </div>
+        </div>
+        <h3>Select role...</h3>
+        <div class="form-group">
+            <div>
+                <input type="radio" id="user" name="role" th:value="USER">
+                <label for="user">User</label><br/>
+                <input type="radio" id="admin" name="role" th:value="ADMIN">
+                <label for="admin">Admin</label><br/>
             </div>
         </div>
         <div class="form-group">
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-paper-plane"></i></span>
-                <input th:field="*{description}" type="text" class="form-control" name="description" placeholder="Description" required="required">
-                <small th:if="${#fields.hasErrors('description')}" th:errors="*{description}" id="descriptionError" class="form-text bg-danger rounded"></small>
-            </div>
-        </div>
-        <div class="form-group">
-            <input th:field="*{price}" type="number" class="form-control" name="price" placeholder="Price" required="required">
-            <small th:if="${#fields.hasErrors('price')}" th:errors="*{price}" id="priceError" class="form-text bg-danger rounded"></small>
-        </div>
-        <div class="form-group">
-            <select name="genre" class="form-control required" id="genre-sel">
-                <option value="">Select a genre...</option>
-                <option th:each="g : ${T(bg.softuni.gamingstore.models.entities.enums.GenreEnum).values()}" th:object="${g}"
-                th:text="${g}" th:value="${g}"></option>
-            </select>
-            <small th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}" id="genreError" class="form-text bg-danger rounded"></small>
-        </div>
-        <div class="form-group">
-            <select name="platform" class="form-control required" id="platform-sel">
-                <option value="">Select a platform...</option>
-                <option th:each="p : ${T(bg.softuni.gamingstore.models.entities.enums.GamePlatformEnums).values()}" th:object="${p}"
-                        th:text="${p}" th:value="${p}"></option>
-            </select>
-            <small th:if="${#fields.hasErrors('platform')}" th:errors="*{platform}" id="platformError" class="form-text bg-danger rounded"></small>
-        </div>
-        <div class="form-group">
-            <input th:field="*{imageUrl}" type="file" class="form-control" name="price" placeholder="Price" required="required">
-            <small th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}" id="imageUrlError" class="form-text bg-danger rounded"></small>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+            <button type="submit" class="btn btn-primary btn-lg">Submit change</button>
         </div>
     </form>
 </div>

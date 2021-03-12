@@ -1,6 +1,7 @@
 package bg.softuni.gamingstore.services;
 
 import bg.softuni.gamingstore.models.entities.UserEntity;
+import bg.softuni.gamingstore.models.services.ChangeUserRoleServiceModel;
 import bg.softuni.gamingstore.models.services.RegisterServiceModel;
 import bg.softuni.gamingstore.models.views.UserOwnedGamesViewModel;
 
@@ -14,4 +15,8 @@ public interface UserService {
     UserEntity getUserEntity();
 
     List<UserOwnedGamesViewModel> getAllUserGames();
+
+    List<UserEntity> getAllUsers();
+
+    void changeUserRole(ChangeUserRoleServiceModel map);
 }

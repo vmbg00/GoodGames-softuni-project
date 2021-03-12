@@ -106,7 +106,7 @@
 <div class="signup-form">
     <form th:action="@{/users/login}" method="POST">
         <h2>Login</h2>
-        <h5 th:if="${bad_credentials}" class="text-center text-light form-text bg-danger rounded">User doesn't exist</h5>
+        <h5 th:if="${bad_credentials}" class="text-center text-light form-text bg-danger rounded">User doesn't exist or credentials typed wrong <wrong></wrong></h5>
         <p></p>
         <hr>
         <div class="form-group">
