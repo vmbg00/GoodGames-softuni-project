@@ -1,5 +1,6 @@
 package bg.softuni.gamingstore.web;
 
+import bg.softuni.gamingstore.events.GameCreatedEventPublisher;
 import bg.softuni.gamingstore.models.binding.BillingHistoryBindingModel;
 import bg.softuni.gamingstore.models.binding.StoreAddGameBindingModel;
 import bg.softuni.gamingstore.models.services.BillingHistoryServiceModel;
@@ -24,12 +25,14 @@ public class StoreController {
     private final ModelMapper modelMapper;
     private final BillingHistoryService billingHistoryService;
     private final ShoppingCartService shoppingCartService;
+    private final GameCreatedEventPublisher publisher;
 
-    public StoreController(GameService gameService, ModelMapper modelMapper, BillingHistoryService billingHistoryService, ShoppingCartService shoppingCartService) {
+    public StoreController(GameService gameService, ModelMapper modelMapper, BillingHistoryService billingHistoryService, ShoppingCartService shoppingCartService, GameCreatedEventPublisher publisher) {
         this.gameService = gameService;
         this.modelMapper = modelMapper;
         this.billingHistoryService = billingHistoryService;
         this.shoppingCartService = shoppingCartService;
+        this.publisher = publisher;
     }
 
     @GetMapping("/store")
@@ -125,6 +128,7 @@ public class StoreController {
         }
 
         this.gameService.addNewGameToStore(this.modelMapper.map(storeAddGameBindingModel, StoreAddGameServiceModel.class));
+        publisher.publishEvent(storeAddGameBindingModel.getName(), storeAddGameBindingModel.getPrice());
 
         return "redirect:/";
     }

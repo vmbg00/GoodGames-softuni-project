@@ -1,5 +1,6 @@
 package bg.softuni.gamingstore.web;
 
+import bg.softuni.gamingstore.events.NewUserEventPublisher;
 import bg.softuni.gamingstore.models.binding.ChangeUserRoleBindingModel;
 import bg.softuni.gamingstore.models.binding.DemoteUserBindingModel;
 import bg.softuni.gamingstore.models.binding.RegisterBindingModel;
@@ -27,10 +28,12 @@ public class UserController {
 
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final NewUserEventPublisher publisher;
 
-    public UserController(UserService userService, ModelMapper modelMapper) {
+    public UserController(UserService userService, ModelMapper modelMapper, NewUserEventPublisher publisher) {
         this.userService = userService;
         this.modelMapper = modelMapper;
+        this.publisher = publisher;
     }
 
     @GetMapping("/login")
@@ -98,6 +101,7 @@ public class UserController {
         }
 
         this.userService.register(this.modelMapper.map(registerBindingModel, RegisterServiceModel.class));
+        this.publisher.publishEvent(registerBindingModel.getUsername());
 
         return "redirect:/users/login";
     }
