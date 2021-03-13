@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
-    <title>GoodGames | Add user role</title>
+    <title>GoodGames | Demote user</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" type="image/png" href="assets/images/favicon.png">
@@ -105,9 +105,8 @@
 </head>
 <body>
 <div class="signup-form">
-    <form th:action="@{/users/change-user-role}" th:method="POST" th:object="${changeUserRoleBindingModel}">
-        <h2>Promote a user</h2>
-        <p>Admin only</p>
+    <form th:action="@{/users/demote-user}" th:method="POST" th:object="${demoteUserBindingModel}">
+        <h2>Demote user</h2>
         <hr>
         <div class="form-group">
             <div class="input-group">
@@ -115,14 +114,10 @@
                 <select type="text" class="form-control" name="username" required="required">
                     <option value="">Select a user...</option>
                     <option th:each="u : ${allUsersList}" th:object="${u}"
-                    th:value="${u.username}" th:text="${u.username}"></option>
+                            th:value="${u.username}" th:text="${u.username}"></option>
                 </select>
                 <small id="usernameError" class="form-text bg-danger rounded"></small>
             </div>
-        </div>
-        <h3>Are you sure?</h3>
-        <div class="form-group">
-            <label class="checkbox-inline"><input type="checkbox" required="required"> I confirm this choice</label>
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-lg">Submit change</button>

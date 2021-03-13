@@ -15,4 +15,6 @@ public interface ShoppingCartService {
     void clearCurrentUserCart();
 
     void removeItemFromCart(Long id);
+
+    boolean checkIfGameIsAlreadyInCart(Long id);
 }

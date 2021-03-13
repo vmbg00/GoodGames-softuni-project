@@ -5,6 +5,7 @@ import bg.softuni.gamingstore.models.entities.RoleEntity;
 import bg.softuni.gamingstore.models.entities.UserEntity;
 import bg.softuni.gamingstore.models.entities.enums.RoleEnums;
 import bg.softuni.gamingstore.models.services.ChangeUserRoleServiceModel;
+import bg.softuni.gamingstore.models.services.DemoteUserServiceModel;
 import bg.softuni.gamingstore.models.services.RegisterServiceModel;
 import bg.softuni.gamingstore.models.views.UserOwnedGamesViewModel;
 import bg.softuni.gamingstore.repositories.RolesRepository;
@@ -108,17 +109,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserEntity> getAllUsers() {
-        return this.userRepository.findAll();
+        return this.userRepository.findAllWithUserRoles();
+    }
+
+    @Override
+    public List<UserEntity> getAllWithAdminRoles() {
+        return this.userRepository.findAllWithUserAndAdminRoles();
     }
 
     @Override
     public void changeUserRole(ChangeUserRoleServiceModel map) {
         Optional<UserEntity> byUsername = this.userRepository.findByUsername(map.getUsername());
 
-        RoleEntity byName = this.rolesRepository.findByName(map.getRole());
+        RoleEntity byName = this.rolesRepository.findByName(RoleEnums.ADMIN);
 
         byUsername.get().getRoles().add(byName);
 
         this.userRepository.saveAndFlush(byUsername.get());
+    }
+
+    @Override
+    public void demoteUser(DemoteUserServiceModel userRoleServiceModel) {
+        Optional<UserEntity> username = this.userRepository.findByUsername(userRoleServiceModel.getUsername());
+
+        RoleEntity role = this.rolesRepository.findByName(RoleEnums.ADMIN);
+
+        username.get().getRoles().remove(role);
+
+        this.userRepository.save(username.get());
     }
 }

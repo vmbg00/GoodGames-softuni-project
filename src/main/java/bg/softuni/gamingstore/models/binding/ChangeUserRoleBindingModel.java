@@ -2,6 +2,8 @@ package bg.softuni.gamingstore.models.binding;
 
 import bg.softuni.gamingstore.models.entities.enums.RoleEnums;
 
+import javax.validation.constraints.NotNull;
+
 public class ChangeUserRoleBindingModel {
     private String username;
     private RoleEnums role;
@@ -9,6 +11,7 @@ public class ChangeUserRoleBindingModel {
     public ChangeUserRoleBindingModel() {
     }
 
+    @NotNull
     public String getUsername() {
         return username;
     }

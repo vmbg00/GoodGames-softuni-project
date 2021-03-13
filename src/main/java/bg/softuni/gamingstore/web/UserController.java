@@ -1,8 +1,10 @@
 package bg.softuni.gamingstore.web;
 
 import bg.softuni.gamingstore.models.binding.ChangeUserRoleBindingModel;
+import bg.softuni.gamingstore.models.binding.DemoteUserBindingModel;
 import bg.softuni.gamingstore.models.binding.RegisterBindingModel;
 import bg.softuni.gamingstore.models.services.ChangeUserRoleServiceModel;
+import bg.softuni.gamingstore.models.services.DemoteUserServiceModel;
 import bg.softuni.gamingstore.models.services.RegisterServiceModel;
 import bg.softuni.gamingstore.services.UserService;
 import org.modelmapper.ModelMapper;
@@ -137,6 +139,32 @@ public class UserController {
         }
 
         this.userService.changeUserRole(this.modelMapper.map(changeUserRoleBindingModel, ChangeUserRoleServiceModel.class));
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/demote-user")
+    public String demoteUser(Model model){
+        if (!model.containsAttribute("demoteUserBindingModel")){
+            model.addAttribute("demoteUserBindingModel", new DemoteUserBindingModel());
+        }
+        model.addAttribute("allUsersList", this.userService.getAllWithAdminRoles());
+        return "demote-user";
+    }
+
+    @PostMapping("/demote-user")
+    public String demoteUserConfirm(@Valid DemoteUserBindingModel demoteUserBindingModel,
+                                    BindingResult bindingResult,
+                                    RedirectAttributes redirectAttributes){
+
+        if (bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("demoteUserBindingModel", demoteUserBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.demoteUserBindingModel", bindingResult);
+
+            return "redirect:/demote-user";
+        }
+
+        this.userService.demoteUser(this.modelMapper.map(demoteUserBindingModel, DemoteUserServiceModel.class));
 
         return "redirect:/";
     }

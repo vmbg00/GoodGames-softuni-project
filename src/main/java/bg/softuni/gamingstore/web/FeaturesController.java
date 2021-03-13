@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class FeaturesController {
 
-    @GetMapping("/forum")
-    public String forum(){
-        return "forum";
+    @GetMapping("/coming-soon")
+    public String comingSoon(){
+        return "coming-soon";
     }
 }

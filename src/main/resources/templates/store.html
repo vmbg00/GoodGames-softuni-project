@@ -176,15 +176,14 @@
                         <div class="nk-gap-1"></div>
                         <div class="nk-product-price" th:text="|€ *{price}|"></div>
                         <div class="nk-gap-1"></div>
-                        <a th:href="@{/store/add/{id}(id=*{id})}" class="alert-link">
-                            <button type="button" class="btn btn-primary btn-lg pull-right">
-                                ADD TO CART
-                            </button>
-                        </a>
+                        <form th:action="@{/store/add/{id}(id=*{id})}" th:method="POST" >
+                            <h5 th:if="${checkIfGameIsAlreadyInCart}" class="text-center text-light form-text bg-danger rounded">Game is already added to cart</h5>
+                            <button class="btn btn-primary btn-lg pull-right" type="submit" id="addToCartButton">ADD TO CART </button>
+                        </form>
                         <div class="nk-gap-1"></div>
-                        <form sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/store/delete/{id}(id=*{id})}" th:action="@{/store/delete/{id}(id=*{id})}" th:method="delete" >
+                        <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/store/delete/{id}(id=*{id})}" th:method="delete" >
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                            <button class="btn btn-danger btn-lg pull-right" type="submit" id="submitButton">DELETE GAME </button>
+                            <button class="btn btn-danger btn-lg pull-right" type="submit" id="deleteButton">DELETE GAME </button>
                         </form>
                     </div>
                 </div>

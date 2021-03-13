@@ -41,10 +41,16 @@ public class StoreController {
         return "store";
     }
 
-    @GetMapping("/store/add/{id}")
-    public String addToCart(@PathVariable Long id){
-        this.shoppingCartService.addToCart(id);
+    @PostMapping("/store/add/{id}")
+    public String addToCart(@PathVariable Long id, RedirectAttributes redirectAttributes){
+        if (this.shoppingCartService.checkIfGameIsAlreadyInCart(id)){
+            redirectAttributes.addFlashAttribute("checkIfGameIsAlreadyInCart", true);
+        }
+        else {
+            this.shoppingCartService.addToCart(id);
 
+            return "redirect:/store";
+        }
         return "redirect:/store";
     }
 
