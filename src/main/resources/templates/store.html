@@ -205,44 +205,50 @@
     <div class="row vertical-gap">
 
 
-        <div class="col-lg-6">
+        <div th:object="${firstGame}" class="col-lg-6">
             <div class="nk-product-cat-2">
                 <a class="nk-product-image" href="store-product.html">
-                    <img src="https://i.redd.it/3ygdqb46ua451.png" alt="With what mingled joy">
+                    <img th:src="*{imageUrl}" alt="With what mingled joy">
                 </a>
                 <div class="nk-product-cont">
-                    <h3 class="nk-product-title h5">Glory Hold</h3>
+                    <h3 class="nk-product-title h5" th:text="*{name}">Glory Hold</h3>
                     <div class="nk-gap-1"></div>
                     <div class="nk-product-rating" data-rating="3.5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i> <i class="far fa-star"></i></div>
                     <div class="nk-gap-1"></div>
-                    Oh, dear!Oh, dear!How men should beware of wicked
+                    <a th:text="*{description}"></a>
                     <div class="nk-gap-2"></div>
-                    <div class="nk-product-price">€ 11.00</div>
+                    <div class="nk-product-price" th:text="|€ *{price}|">€ 11.00</div>
                     <div class="nk-gap-1"></div>
-                    <a th:href="@{/store/add/6}" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                    <form th:action="@{/store/add/{id}(id=*{id})}" th:method="POST" >
+                        <h5 th:if="${checkIfGameIsAlreadyInCart}" class="text-center text-light form-text bg-danger rounded">Game is already added to cart</h5>
+                        <button class="btn btn-primary btn-lg pull-right" type="submit" id="addToCartButtonRecommended1">ADD TO CART </button>
+                    </form>
                 </div>
             </div>
         </div>
 
-
-        <div class="col-lg-6">
+        <div th:object="${secondGame}" class="col-lg-6">
             <div class="nk-product-cat-2">
                 <a class="nk-product-image" href="store-product.html">
-                    <img src="https://i.pinimg.com/236x/45/e4/a7/45e4a7d5e9f6853e8fe05cbce5105517--zombie-party-zombie-app.jpg" alt="She was bouncing away">
+                    <img th:src="*{imageUrl}" alt="With what mingled joy">
                 </a>
                 <div class="nk-product-cont">
-                    <h3 class="nk-product-title h5">Plants vs Zombies</h3>
+                    <h3 class="nk-product-title h5" th:text="*{name}">Glory Hold</h3>
                     <div class="nk-gap-1"></div>
-                    <div class="nk-product-rating" data-rating="4.5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i></div>
+                    <div class="nk-product-rating" data-rating="3.5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i> <i class="far fa-star"></i></div>
                     <div class="nk-gap-1"></div>
-                    Is your poor brother recovered of his rack - punch ?
+                    <a th:text="*{description}"></a>
                     <div class="nk-gap-2"></div>
-                    <div class="nk-product-price">€ 28.00</div>
+                    <div class="nk-product-price" th:text="|€ *{price}|">€ 11.00</div>
                     <div class="nk-gap-1"></div>
-                    <a th:href="@{/store/add/5}" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                    <form th:action="@{/store/add/{id}(id=*{id})}" th:method="POST" >
+                        <h5 th:if="${checkIfGameIsAlreadyInCart}" class="text-center text-light form-text bg-danger rounded">Game is already added to cart</h5>
+                        <button class="btn btn-primary btn-lg pull-right" type="submit" id="addToCartButtonRecommended2">ADD TO CART </button>
+                    </form>
                 </div>
             </div>
         </div>
+
 
     </div>
     <!-- END: Featured Games -->

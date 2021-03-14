@@ -9,6 +9,7 @@ import bg.softuni.gamingstore.services.BillingHistoryService;
 import bg.softuni.gamingstore.services.GameService;
 import bg.softuni.gamingstore.services.ShoppingCartService;
 import org.modelmapper.ModelMapper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,6 +41,8 @@ public class StoreController {
 
         model.addAttribute("availableGames", this.gameService.getAllGames());
         model.addAttribute("availableGamesCount", this.gameService.countAllGames());
+        model.addAttribute("firstGame", this.gameService.firstGame());
+        model.addAttribute("secondGame", this.gameService.secondGame());
 
         return "store";
     }
