@@ -2,9 +2,11 @@ package bg.softuni.gamingstore.web;
 
 import bg.softuni.gamingstore.events.NewUserEventPublisher;
 import bg.softuni.gamingstore.models.binding.ChangeUserRoleBindingModel;
+import bg.softuni.gamingstore.models.binding.DeleteUserBindingModel;
 import bg.softuni.gamingstore.models.binding.DemoteUserBindingModel;
 import bg.softuni.gamingstore.models.binding.RegisterBindingModel;
 import bg.softuni.gamingstore.models.services.ChangeUserRoleServiceModel;
+import bg.softuni.gamingstore.models.services.DeleteUserServiceModel;
 import bg.softuni.gamingstore.models.services.DemoteUserServiceModel;
 import bg.softuni.gamingstore.models.services.RegisterServiceModel;
 import bg.softuni.gamingstore.services.UserService;
@@ -13,10 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -169,6 +168,32 @@ public class UserController {
         }
 
         this.userService.demoteUser(this.modelMapper.map(demoteUserBindingModel, DemoteUserServiceModel.class));
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/delete-user")
+    public String deleteUser(Model model){
+        if (!model.containsAttribute("deleteUserBindingModel")){
+            model.addAttribute("deleteUserBindingModel", new DeleteUserBindingModel());
+        }
+        model.addAttribute("allUsersAndAdmins", this.userService.getAllUsersAndAdmins());
+        return "delete-user";
+    }
+
+    @PostMapping("/delete-user")
+    public String deleteUserConfirm(@Valid DeleteUserBindingModel deleteUserBindingModel,
+                                    BindingResult bindingResult,
+                                    RedirectAttributes redirectAttributes){
+
+        if (bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("deleteUserBindingModel", deleteUserBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.deleteUserBindingModel", bindingResult);
+
+            return "redirect:/delete-user";
+        }
+
+        this.userService.deleteUser(this.modelMapper.map(deleteUserBindingModel, DeleteUserServiceModel.class));
 
         return "redirect:/";
     }

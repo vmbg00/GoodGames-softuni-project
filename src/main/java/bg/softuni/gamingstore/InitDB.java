@@ -37,6 +37,10 @@ public class InitDB implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         if (rolesRepository.count() == 0){
+            RoleEntity owner = new RoleEntity();
+            owner.setName(RoleEnums.OWNER);
+            owner.setDescription("Godfather");
+
             RoleEntity admin = new RoleEntity();
             admin.setName(RoleEnums.ADMIN);
             admin.setDescription("Big boss");
@@ -45,7 +49,7 @@ public class InitDB implements CommandLineRunner {
             user.setName(RoleEnums.USER);
             user.setDescription("Peasant");
 
-            this.rolesRepository.saveAll(List.of(admin, user));
+            this.rolesRepository.saveAll(List.of(owner, admin, user));
         }
 
         if (userRepository.count() == 0){
@@ -53,12 +57,13 @@ public class InitDB implements CommandLineRunner {
 
             RoleEntity admin = this.rolesRepository.findByName(RoleEnums.ADMIN);
             RoleEntity user = this.rolesRepository.findByName(RoleEnums.USER);
+            RoleEntity owner = this.rolesRepository.findByName(RoleEnums.OWNER);
 
             userEntity
                     .setUsername("admin")
                     .setPassword(this.passwordEncoder.encode("12345"))
                     .setEmail("admin@gmail.com")
-                    .setRoles(Set.of(admin, user))
+                    .setRoles(Set.of(owner, admin, user))
                     .setGames(null);
 
             userRepository.save(userEntity);

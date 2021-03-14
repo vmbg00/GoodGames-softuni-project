@@ -17,4 +17,7 @@ public interface UserRepository extends JpaRepository<UserEntity,Long> {
 
     @Query("SELECT u FROM UserEntity as u where u.roles.size = 2")
     List<UserEntity> findAllWithUserAndAdminRoles();
+
+    @Query("SELECT u FROM UserEntity as u where u.roles.size <= 2")
+    List<UserEntity> getAllUsersAndAdmins();
 }

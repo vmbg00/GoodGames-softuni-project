@@ -29,6 +29,12 @@
 
                         </a>
                     </li>
+                    <li>
+                        <a sec:authorize="hasRole('ROLE_OWNER')" href="/users/delete-user">
+                            Delete a user
+
+                        </a>
+                    </li>
                 </ul>
                 </li>
 

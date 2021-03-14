@@ -5,6 +5,7 @@ import bg.softuni.gamingstore.models.entities.RoleEntity;
 import bg.softuni.gamingstore.models.entities.UserEntity;
 import bg.softuni.gamingstore.models.entities.enums.RoleEnums;
 import bg.softuni.gamingstore.models.services.ChangeUserRoleServiceModel;
+import bg.softuni.gamingstore.models.services.DeleteUserServiceModel;
 import bg.softuni.gamingstore.models.services.DemoteUserServiceModel;
 import bg.softuni.gamingstore.models.services.RegisterServiceModel;
 import bg.softuni.gamingstore.models.views.UserOwnedGamesViewModel;
@@ -137,5 +138,17 @@ public class UserServiceImpl implements UserService {
         username.get().getRoles().remove(role);
 
         this.userRepository.save(username.get());
+    }
+
+    @Override
+    public List<UserEntity> getAllUsersAndAdmins() {
+        return this.userRepository.getAllUsersAndAdmins();
+    }
+
+    @Override
+    public void deleteUser(DeleteUserServiceModel userServiceModel) {
+        Optional<UserEntity> user = this.userRepository.findByUsername(userServiceModel.getUsername());
+
+        this.userRepository.delete(user.get());
     }
 }
