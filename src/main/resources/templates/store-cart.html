@@ -194,7 +194,7 @@
 
         </div>
         <div class="nk-gap-1"></div>
-        <a class="nk-btn nk-btn-rounded nk-btn-color-white float-right" href="store-checkout">Checkout</a>
+        <a th:if="${gamesInCart.size() >= 1}" class="nk-btn nk-btn-rounded nk-btn-color-white float-right" href="store-checkout">Checkout</a>
 
     </div>
 </div>

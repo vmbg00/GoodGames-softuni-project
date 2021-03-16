@@ -162,10 +162,10 @@
     <h3 class="nk-decorated-h-2"><span th:text="|Available games: ${availableGamesCount}|"></span></h3>
     <div class="nk-gap"></div>
     <div class="nk-carousel nk-carousel-x4" data-autoplay="5000" data-dots="false" data-cell-align="left" data-arrows="true">
+        <h5 th:if="${checkIfGameIsAlreadyInCart}" class="text-center text-light form-text bg-danger rounded">Game is already added to cart</h5>
         <div class="nk-carousel-inner">
-
-
-            <div th:each="g : ${availableGames}" th:object="${g}"><div class="pl-5 pr-5">
+            <div th:each="g : ${availableGames}" th:object="${g}">
+                <div class="pl-5 pr-5">
                 <div class="nk-product-cat-3">
                     <a class="nk-product-image">
                         <img th:src="*{imageUrl}" alt="So saying he unbuckled">
@@ -177,7 +177,6 @@
                         <div class="nk-product-price" th:text="|€ *{price}|"></div>
                         <div class="nk-gap-1"></div>
                         <form th:action="@{/store/add/{id}(id=*{id})}" th:method="POST" >
-                            <h5 th:if="${checkIfGameIsAlreadyInCart}" class="text-center text-light form-text bg-danger rounded">Game is already added to cart</h5>
                             <button class="btn btn-primary btn-lg pull-right" type="submit" id="addToCartButton">ADD TO CART </button>
                         </form>
                         <div class="nk-gap-1"></div>
@@ -207,7 +206,7 @@
 
         <div th:object="${firstGame}" class="col-lg-6">
             <div class="nk-product-cat-2">
-                <a class="nk-product-image" href="store-product.html">
+                <a class="nk-product-image">
                     <img th:src="*{imageUrl}" alt="With what mingled joy">
                 </a>
                 <div class="nk-product-cont">
@@ -220,7 +219,6 @@
                     <div class="nk-product-price" th:text="|€ *{price}|">€ 11.00</div>
                     <div class="nk-gap-1"></div>
                     <form th:action="@{/store/add/{id}(id=*{id})}" th:method="POST" >
-                        <h5 th:if="${checkIfGameIsAlreadyInCart}" class="text-center text-light form-text bg-danger rounded">Game is already added to cart</h5>
                         <button class="btn btn-primary btn-lg pull-right" type="submit" id="addToCartButtonRecommended1">ADD TO CART </button>
                     </form>
                 </div>
@@ -229,7 +227,7 @@
 
         <div th:object="${secondGame}" class="col-lg-6">
             <div class="nk-product-cat-2">
-                <a class="nk-product-image" href="store-product.html">
+                <a class="nk-product-image">
                     <img th:src="*{imageUrl}" alt="With what mingled joy">
                 </a>
                 <div class="nk-product-cont">
@@ -242,7 +240,6 @@
                     <div class="nk-product-price" th:text="|€ *{price}|">€ 11.00</div>
                     <div class="nk-gap-1"></div>
                     <form th:action="@{/store/add/{id}(id=*{id})}" th:method="POST" >
-                        <h5 th:if="${checkIfGameIsAlreadyInCart}" class="text-center text-light form-text bg-danger rounded">Game is already added to cart</h5>
                         <button class="btn btn-primary btn-lg pull-right" type="submit" id="addToCartButtonRecommended2">ADD TO CART </button>
                     </form>
                 </div>

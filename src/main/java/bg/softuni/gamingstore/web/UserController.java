@@ -64,9 +64,13 @@ public class UserController {
 //        }
 //    }
 
-
     @GetMapping("/games")
-    public String allGames(Model model){
+    public String allGames(){
+        return "user-games-display";
+    }
+
+    @GetMapping("/user-games")
+    public String allGamesDisplay(Model model){
         model.addAttribute("allUserGames", this.userService.getAllUserGames());
         return "user-games";
     }

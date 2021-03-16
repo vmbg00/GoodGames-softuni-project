@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class NewUserListener {
 
-    private Logger LOGGER = LoggerFactory.getLogger(GameCreatedEvent.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(NewUserEvent.class);
 
     @EventListener(NewUserEvent.class)
     public void onStudentEvent(NewUserEvent event) {
