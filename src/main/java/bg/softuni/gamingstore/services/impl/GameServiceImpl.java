@@ -45,8 +45,19 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<GamesViewModel> getAllGames() {
-        return this.gamesRepository.findAll().stream().map(gameEntity ->
-                this.modelMapper.map(gameEntity, GamesViewModel.class)).collect(Collectors.toList());
+        List<GameEntity> gameEntities = this.gamesRepository.findAll();
+        UserEntity currentUser = this.userService.getUserEntity();
+
+        List<GamesViewModel> result = new ArrayList<>();
+        for (GameEntity game : gameEntities) {
+            if (!currentUser.getGames().contains(game)){
+                GamesViewModel gamesViewModel = this.modelMapper.map(game, GamesViewModel.class);
+
+                result.add(gamesViewModel);
+            }
+        }
+
+        return result;
     }
 
     @Override
@@ -56,7 +67,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public long countAllGames() {
-        return this.gamesRepository.count();
+        return this.gamesRepository.count() - this.userService.getUserEntity().getGames().size();
     }
 
     @Override

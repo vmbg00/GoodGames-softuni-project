@@ -38,7 +38,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 // allow access to static resources to anyone
                         antMatchers("/assets/**").permitAll().
                 // allow access to home, gallery, store and user login and registration to anyone
-                        antMatchers("/", "/users/login", "/users/register", "/gallery", "/store").permitAll().
+                        antMatchers("/", "/users/login", "/users/register", "/gallery", "/news").permitAll().
                 // protect all other pages
                         antMatchers("/**").authenticated().
                 and().
