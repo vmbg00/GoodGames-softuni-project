@@ -2,12 +2,17 @@ package bg.softuni.gamingstore.services.impl;
 
 import bg.softuni.gamingstore.models.entities.BillingHistoryEntity;
 import bg.softuni.gamingstore.models.services.BillingHistoryServiceModel;
+import bg.softuni.gamingstore.models.views.BillingHistoryViewModel;
 import bg.softuni.gamingstore.repositories.BillingHistoryRepository;
 import bg.softuni.gamingstore.repositories.UserRepository;
 import bg.softuni.gamingstore.services.BillingHistoryService;
 import bg.softuni.gamingstore.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 public class BillingHistoryServiceImpl implements BillingHistoryService {
@@ -28,5 +33,16 @@ public class BillingHistoryServiceImpl implements BillingHistoryService {
         billingHistoryEntity.setUserEntity(this.userService.getUserEntity());
 
         this.billingHistoryRepository.save(billingHistoryEntity);
+    }
+
+    @Override
+    public List<BillingHistoryViewModel> getAllBillingHistories() {
+        return this.billingHistoryRepository.findAll().stream().map(billingHistoryEntity -> {
+            BillingHistoryViewModel viewModel = this.modelMapper.map(billingHistoryEntity, BillingHistoryViewModel.class);
+
+            viewModel.setUser(billingHistoryEntity.getUserEntity().getUsername());
+
+            return viewModel;
+        }).collect(Collectors.toList());
     }
 }

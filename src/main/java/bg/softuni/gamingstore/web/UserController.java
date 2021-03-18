@@ -9,6 +9,7 @@ import bg.softuni.gamingstore.models.services.ChangeUserRoleServiceModel;
 import bg.softuni.gamingstore.models.services.DeleteUserServiceModel;
 import bg.softuni.gamingstore.models.services.DemoteUserServiceModel;
 import bg.softuni.gamingstore.models.services.RegisterServiceModel;
+import bg.softuni.gamingstore.services.BillingHistoryService;
 import bg.softuni.gamingstore.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -26,11 +27,13 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
+    private final BillingHistoryService billingHistoryService;
     private final ModelMapper modelMapper;
     private final NewUserEventPublisher publisher;
 
-    public UserController(UserService userService, ModelMapper modelMapper, NewUserEventPublisher publisher) {
+    public UserController(UserService userService, BillingHistoryService billingHistoryService, ModelMapper modelMapper, NewUserEventPublisher publisher) {
         this.userService = userService;
+        this.billingHistoryService = billingHistoryService;
         this.modelMapper = modelMapper;
         this.publisher = publisher;
     }
@@ -200,6 +203,12 @@ public class UserController {
         this.userService.deleteUser(this.modelMapper.map(deleteUserBindingModel, DeleteUserServiceModel.class));
 
         return "redirect:/";
+    }
+
+    @GetMapping("/billing")
+    public String billingHistories(Model model){
+        model.addAttribute("allBillingHistories", this.billingHistoryService.getAllBillingHistories());
+        return "billing-history";
     }
 
 }
