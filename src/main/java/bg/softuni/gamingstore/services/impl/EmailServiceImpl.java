@@ -22,10 +22,9 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void sendMail(String to) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("noreply@goodgames.com");
         message.setTo(to);
-        message.setSubject("Subscription for upcoming game!");
-        message.setText("Test test test");
+        message.setSubject("GoodGames | Subscription");
+        message.setText("Thank you for subscribing. You'll receive an email when the upcoming game is released!");
         emailSender.send(message);
     }
 }

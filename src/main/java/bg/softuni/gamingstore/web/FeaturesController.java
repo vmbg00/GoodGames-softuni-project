@@ -2,10 +2,12 @@ package bg.softuni.gamingstore.web;
 
 import bg.softuni.gamingstore.services.EmailService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class FeaturesController {
@@ -23,9 +25,11 @@ public class FeaturesController {
 
     @PostMapping("/coming-soon")
     @ResponseBody
-    public String comingSoonConfirm(@RequestParam String email){
+    public ModelAndView comingSoonConfirm(@RequestParam String email){
+        ModelAndView modelAndView = new ModelAndView();
         this.emailService.sendMail(email);
 
-        return "redirect:/";
+        modelAndView.setViewName("coming-soon");
+        return modelAndView;
     }
 }

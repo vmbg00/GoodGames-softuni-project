@@ -103,6 +103,8 @@
 
             <div class="nk-gap-2"></div>
             <strong class="text-white">Subscribe now or you'll miss all the fun!</strong>
+            <div class="nk-gap-1"></div>
+            <strong class="text-white">Check your email after subscribing.</strong>
             <div class="nk-gap-2"></div>
 
             <div class="row">
@@ -110,11 +112,9 @@
                     <!-- START: MailChimp Signup Form -->
                     <form th:action="@{/coming-soon}" th:method="post" >
                         <div class="input-group">
-                            <input type="email" value="" name="email" class="required" placeholder="Enter your Email">
+                            <input type="email" value="" name="email" class="required email form-control" placeholder="Enter your Email">
                             <button class="nk-btn nk-btn-rounded nk-btn-color-white ml-20">Subscribe</button>
                         </div>
-                        <div class="nk-form-response-success"></div>
-                        <div class="nk-form-response-error"></div>
                         <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
                         <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_d433160c0c43dcf8ecd52402f_7eafafe8f0" tabindex="-1" value=""></div>
                     </form>
