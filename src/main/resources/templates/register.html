@@ -101,6 +101,18 @@
             font-size: 7px;
             position: absolute;
         }
+
+        input:invalid {
+            border: 2px solid red;
+        }
+
+        input:invalid:required {
+            background-image: linear-gradient(to right, lightpink, lightgreen);
+        }
+
+        input:valid {
+            border: 2px solid lawngreen;
+        }
     </style>
 </head>
 <body>
@@ -113,7 +125,7 @@
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                <input th:field="*{username}" type="text" class="form-control" name="username" placeholder="Enter username" required="required">
+                <input th:field="*{username}" minlength="4" type="text" class="form-control" name="username" placeholder="Enter username" required="required">
                 <small th:if="${#fields.hasErrors('username')}" th:errors="*{username}" id="usernameError" class="form-text bg-danger rounded"></small>
             </div>
         </div>
@@ -127,7 +139,7 @@
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                <input th:field="*{password}" type="password" class="form-control" name="password" placeholder="Enter password" required="required">
+                <input th:field="*{password}" minlength="5" type="password" class="form-control" name="password" placeholder="Enter password" required="required">
                 <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}" id="passwordError" class="form-text bg-danger rounded"></small>
             </div>
         </div>
@@ -137,7 +149,7 @@
 					<i class="fa fa-lock"></i>
 					<i class="fa fa-check"></i>
 				</span>
-                <input th:field="*{confirmPassword}" type="password" class="form-control" name="confirmPassword" placeholder="Enter confirm password" required="required">
+                <input th:field="*{confirmPassword}" minlength="5" type="password" class="form-control" name="confirmPassword" placeholder="Enter confirm password" required="required">
             </div>
         </div>
         <div class="form-group">
