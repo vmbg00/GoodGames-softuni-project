@@ -37,7 +37,7 @@ public class PictureEntity extends BaseEntity{
         return this;
     }
 
-    @Column
+    @Column(unique = true, nullable = false)
     public String getTitle() {
         return title;
     }

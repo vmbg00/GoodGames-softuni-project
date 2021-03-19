@@ -1,12 +1,14 @@
 package bg.softuni.gamingstore;
 
 import bg.softuni.gamingstore.models.entities.GameEntity;
+import bg.softuni.gamingstore.models.entities.NewsEntity;
 import bg.softuni.gamingstore.models.entities.RoleEntity;
 import bg.softuni.gamingstore.models.entities.UserEntity;
 import bg.softuni.gamingstore.models.entities.enums.GamePlatformEnums;
 import bg.softuni.gamingstore.models.entities.enums.GenreEnum;
 import bg.softuni.gamingstore.models.entities.enums.RoleEnums;
 import bg.softuni.gamingstore.repositories.GamesRepository;
+import bg.softuni.gamingstore.repositories.NewsRepository;
 import bg.softuni.gamingstore.repositories.RolesRepository;
 import bg.softuni.gamingstore.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -25,13 +31,15 @@ public class InitDB implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final GamesRepository gamesRepository;
+    private final NewsRepository newsRepository;
 
     @Autowired
-    public InitDB(RolesRepository rolesRepository, PasswordEncoder passwordEncoder, UserRepository userRepository, GamesRepository gamesRepository) {
+    public InitDB(RolesRepository rolesRepository, PasswordEncoder passwordEncoder, UserRepository userRepository, GamesRepository gamesRepository, NewsRepository newsRepository) {
         this.rolesRepository = rolesRepository;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.gamesRepository = gamesRepository;
+        this.newsRepository = newsRepository;
     }
 
     @Override
@@ -67,6 +75,23 @@ public class InitDB implements CommandLineRunner {
                     .setGames(null);
 
             userRepository.save(userEntity);
+        }
+
+        if (this.newsRepository.count() == 0){
+            NewsEntity news = new NewsEntity();
+
+            news.setTitle("To be or not to be");
+            news.setDescription("I was still occasionally seized with a stormy sob. After we had jogged on for some little time");
+            news.setGenre(GenreEnum.MMO);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+            String format = formatter.format(LocalDate.now());
+
+            news.setDate(format);
+            news.setImage("https://images.pexels.com/photos/1591447/pexels-photo-1591447.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
+            news.setUserEntity(this.userRepository.getOne(Long.parseLong("1")));
+
+            this.newsRepository.save(news);
         }
 
         if (gamesRepository.count() == 0){

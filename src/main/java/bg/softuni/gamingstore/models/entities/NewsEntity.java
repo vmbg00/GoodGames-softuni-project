@@ -1,6 +1,7 @@
 package bg.softuni.gamingstore.models.entities;
 
 import bg.softuni.gamingstore.models.entities.enums.GenreEnum;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 public class NewsEntity extends BaseEntity{
     private String title;
     private String description;
-    private LocalDateTime date;
+    private String date;
     private GenreEnum genre;
     private String image;
     private UserEntity userEntity;
@@ -28,7 +29,7 @@ public class NewsEntity extends BaseEntity{
         return this;
     }
 
-    @Column
+    @Column(unique = true, nullable = false)
     public String getTitle() {
         return title;
     }
@@ -49,11 +50,12 @@ public class NewsEntity extends BaseEntity{
     }
 
     @Column
-    public LocalDateTime getDate() {
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    public String getDate() {
         return date;
     }
 
-    public NewsEntity setDate(LocalDateTime date) {
+    public NewsEntity setDate(String date) {
         this.date = date;
         return this;
     }
