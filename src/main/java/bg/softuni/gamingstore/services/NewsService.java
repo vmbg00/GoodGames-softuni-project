@@ -10,4 +10,6 @@ public interface NewsService {
     List<NewsViewModel> getAllNews();
 
     void addNewNews(NewsAddServiceModel map) throws IOException;
+
+    List<NewsViewModel> getLatestNews();
 }

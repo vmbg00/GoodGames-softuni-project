@@ -11,10 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +32,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public List<NewsViewModel> getAllNews() {
-        return this.newsRepository.findAll().stream().map(newsEntity -> {
+        return this.newsRepository.findAllByOrderByIdDesc().stream().map(newsEntity -> {
             NewsViewModel viewModel = this.modelMapper.map(newsEntity, NewsViewModel.class);
 
             viewModel.setUserEntity(newsEntity.getUserEntity());
@@ -57,5 +56,26 @@ public class NewsServiceImpl implements NewsService {
         newsEntity.setUserEntity(newsEntity.getUserEntity());
 
         this.newsRepository.save(newsEntity);
+    }
+
+    @Override
+    public List<NewsViewModel> getLatestNews() {
+        List<NewsEntity> allNews = this.newsRepository.findAllByOrderByIdDesc();
+
+        List<NewsViewModel> result = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            try {
+                NewsEntity newsEntity = allNews.get(i);
+                NewsViewModel viewModel = this.modelMapper.map(newsEntity, NewsViewModel.class);
+
+                viewModel.setUserEntity(newsEntity.getUserEntity());
+
+                result.add(viewModel);
+            } catch (Exception e){
+                break;
+            }
+        }
+
+        return result;
     }
 }

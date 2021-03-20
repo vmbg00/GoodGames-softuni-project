@@ -32,6 +32,7 @@ public class NewsController {
     public String news(Model model){
         model.addAttribute("pictures", this.galleryService.getAllPics());
         model.addAttribute("news", this.newsService.getAllNews());
+        model.addAttribute("latestNews", this.newsService.getLatestNews());
         return "news";
     }
 
