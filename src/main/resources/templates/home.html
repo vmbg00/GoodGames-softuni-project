@@ -213,22 +213,21 @@
                 <div class="nano-content">
                     
                     
-                    <div class="nk-news-box-item nk-news-box-item-active">
+                    <div th:each="n : ${allLatestNews}" th:object="${n}" class="nk-news-box-item nk-news-box-item-active">
                         <div class="nk-news-box-item-img">
-                            <img src="assets/images/post-1-sm.jpg" alt="Smell magic in the air. Or maybe barbecue">
+                            <img th:src="*{image}" alt="Smell magic in the air. Or maybe barbecue">
                         </div>
-                        <img src="assets/images/post-1.jpg" alt="Smell magic in the air. Or maybe barbecue" class="nk-news-box-item-full-img">
-                        <h3 class="nk-news-box-item-title">Smell magic in the air. Or maybe barbecue</h3>
+                        <img th:src="*{image}" alt="Smell magic in the air. Or maybe barbecue" class="nk-news-box-item-full-img">
+                        <h3 class="nk-news-box-item-title" th:text="*{title}">Smell magic in the air. Or maybe barbecue</h3>
                         
                         <span class="nk-news-box-item-categories">
-                            <span class="bg-main-4">MMO</span>
+                            <span class="bg-main-4" th:text="*{genre}">MMO</span>
                         </span>
                         
                         <div class="nk-news-box-item-text">
-                            <p>With what mingled joy and sorrow do I take up the pen to write to my dearest friend! Oh, what a change between to-day and yesterday! Now I am friendless and alone...</p>
+                            <p th:text="*{description}">With what mingled joy and sorrow do I take up the pen to write to my dearest friend! Oh, what a change between to-day and yesterday! Now I am friendless and alone...</p>
                         </div>
-                        <a href="blog-article.html" class="nk-news-box-item-url">Read More</a>
-                        <div class="nk-news-box-item-date"><span class="fa fa-calendar"></span> Sep 18, 2018</div>
+                        <div class="nk-news-box-item-date"><span class="fa fa-calendar"></span> <a th:text="*{date}"></a></div>
                     </div>
                     
                     
@@ -246,7 +245,6 @@
                         <div class="nk-news-box-item-text">
                             <p>For good, too; though, in consequence of my previous emotions, I was still occasionally seized with a stormy sob . After we had jogged on for some little time, I asked the carrier...</p>
                         </div>
-                        <a href="blog-article.html" class="nk-news-box-item-url">Read More</a>
                         <div class="nk-news-box-item-date"><span class="fa fa-calendar"></span> Sep 5, 2018</div>
                     </div>
                     
