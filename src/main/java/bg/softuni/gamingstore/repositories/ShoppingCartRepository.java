@@ -19,4 +19,8 @@ public interface ShoppingCartRepository extends JpaRepository<ShoppingCartEntity
     @Modifying
     @Query("DELETE FROM ShoppingCartEntity as s WHERE s.games.id = :id")
     void deleteShoppingCartEntityByGames_Id(Long id);
+
+    List<ShoppingCartEntity> getShoppingCartEntityByGames_Name(String name);
+
+    List<ShoppingCartEntity> getShoppingCartEntityByUser_Username(String name);
 }

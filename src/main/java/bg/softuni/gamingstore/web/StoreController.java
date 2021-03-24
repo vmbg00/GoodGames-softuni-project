@@ -9,7 +9,6 @@ import bg.softuni.gamingstore.services.BillingHistoryService;
 import bg.softuni.gamingstore.services.GameService;
 import bg.softuni.gamingstore.services.ShoppingCartService;
 import org.modelmapper.ModelMapper;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -84,6 +83,9 @@ public class StoreController {
 
     @GetMapping("/store-checkout")
     public String storeCheckout(Model model){
+        if (this.shoppingCartService.getAllGamesInCart().size() == 0){
+            return "redirect:store";
+        }
         model.addAttribute("billingHistoryBindingModel", new BillingHistoryBindingModel());
         model.addAttribute("gamesInCart", this.shoppingCartService.getAllGamesInCart());
         model.addAttribute("totalPriceOfAllGames", this.shoppingCartService.totalPriceOfAllGames());

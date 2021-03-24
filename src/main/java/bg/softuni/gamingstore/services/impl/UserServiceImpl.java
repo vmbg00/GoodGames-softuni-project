@@ -151,4 +151,36 @@ public class UserServiceImpl implements UserService {
 
         this.userRepository.delete(user.get());
     }
+
+    @Override
+    public Optional<UserEntity> findByUsername(String name) {
+        return this.userRepository.findByUsername(name);
+    }
+
+    @Override
+    public List<UserEntity> getAll() {
+        return this.userRepository.findAll();
+    }
+
+    @Override
+    public Long getIdByUsername(String username) {
+        Optional<UserEntity> byUsername = this.userRepository.findByUsername(username);
+
+        try {
+            return byUsername.get().getId();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public UserEntity getByEmail(String email) {
+        Optional<UserEntity> userEntity = this.userRepository.findByEmail(email);
+
+        try {
+            return userEntity.get();
+        } catch (Exception e){
+            return null;
+        }
+    }
 }

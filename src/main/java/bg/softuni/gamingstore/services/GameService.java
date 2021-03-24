@@ -6,7 +6,6 @@ import bg.softuni.gamingstore.models.views.GamesViewModel;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 public interface GameService {
 
@@ -24,4 +23,9 @@ public interface GameService {
 
     GameEntity secondGame();
 
+    List<GameEntity> findAllGames();
+
+    GameEntity findByName(String name);
+
+    GameEntity findById(Long id);
 }

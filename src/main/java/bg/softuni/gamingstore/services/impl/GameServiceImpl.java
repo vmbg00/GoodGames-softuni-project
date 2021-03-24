@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class GameServiceImpl implements GameService {
@@ -101,6 +100,21 @@ public class GameServiceImpl implements GameService {
     @Override
     public GameEntity secondGame() {
         return games.get(1);
+    }
+
+    @Override
+    public List<GameEntity> findAllGames() {
+        return this.gamesRepository.findAll();
+    }
+
+    @Override
+    public GameEntity findByName(String name) {
+        return this.gamesRepository.findByName(name);
+    }
+
+    @Override
+    public GameEntity findById(Long id) {
+        return this.gamesRepository.findById(id).get();
     }
 
     @Scheduled(fixedRate = 60000)

@@ -101,4 +101,19 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         return false;
     }
+
+    @Override
+    public List<ShoppingCartEntity> findAllGames() {
+        return this.shoppingCartRepository.findAll();
+    }
+
+    @Override
+    public List<ShoppingCartEntity> getAllCartsWithGame(String name) {
+        return this.shoppingCartRepository.getShoppingCartEntityByGames_Name(name);
+    }
+
+    @Override
+    public List<ShoppingCartEntity> getAllCartsWithUsername(String name) {
+        return this.shoppingCartRepository.getShoppingCartEntityByUser_Username(name);
+    }
 }

@@ -8,6 +8,7 @@ import bg.softuni.gamingstore.models.services.RegisterServiceModel;
 import bg.softuni.gamingstore.models.views.UserOwnedGamesViewModel;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
     void register(RegisterServiceModel map);
@@ -29,4 +30,12 @@ public interface UserService {
     List<UserEntity> getAllUsersAndAdmins();
 
     void deleteUser(DeleteUserServiceModel map);
+
+    Optional<UserEntity> findByUsername(String name);
+
+    List<UserEntity> getAll();
+
+    Long getIdByUsername(String username);
+
+    UserEntity getByEmail(String email);
 }
