@@ -5,6 +5,7 @@ import bg.softuni.gamingstore.models.services.NewsAddServiceModel;
 import bg.softuni.gamingstore.services.GalleryService;
 import bg.softuni.gamingstore.services.NewsService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,6 +38,7 @@ public class NewsController {
     }
 
     @GetMapping("/news/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String newsAdd(Model model){
         if (!model.containsAttribute("newsAddBindingModel")){
             model.addAttribute("newsAddBindingModel", new NewsAddBindingModel());
@@ -46,6 +48,7 @@ public class NewsController {
     }
 
     @PostMapping("/news/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String newsAddConfirm(@Valid NewsAddBindingModel newsAddBindingModel,
                           BindingResult bindingResult,
                           RedirectAttributes redirectAttributes) throws IOException {

@@ -4,6 +4,7 @@ import bg.softuni.gamingstore.models.binding.GalleryAddBindingModel;
 import bg.softuni.gamingstore.models.services.GalleryAddServiceModel;
 import bg.softuni.gamingstore.services.GalleryService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,6 +33,7 @@ public class GalleryController {
     }
 
     @GetMapping("/gallery/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String galleryAdd(Model model){
         if (!model.containsAttribute("galleryAddBindingModel")){
             model.addAttribute("galleryAddBindingModel", new GalleryAddBindingModel());
@@ -41,6 +43,7 @@ public class GalleryController {
     }
 
     @PostMapping("/gallery/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String galleryAddConfirm(@Valid GalleryAddBindingModel galleryAddBindingModel,
                                     BindingResult bindingResult,
                                     RedirectAttributes redirectAttributes) throws IOException {

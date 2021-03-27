@@ -9,6 +9,7 @@ import bg.softuni.gamingstore.services.BillingHistoryService;
 import bg.softuni.gamingstore.services.GameService;
 import bg.softuni.gamingstore.services.ShoppingCartService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -60,6 +61,7 @@ public class StoreController {
     }
 
     @DeleteMapping("/store/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String deleteGame(@PathVariable Long id){
         this.gameService.deleteGame(id);
 
@@ -113,6 +115,7 @@ public class StoreController {
     }
 
     @GetMapping("/store/add-new-game")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String addGameToStore(Model model){
         if (!model.containsAttribute("storeAddGameBindingModel")){
             model.addAttribute("storeAddGameBindingModel", new StoreAddGameBindingModel());
@@ -121,6 +124,7 @@ public class StoreController {
     }
 
     @PostMapping("/store/add-new-game")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String addGameToStoreConfirm(@Valid StoreAddGameBindingModel storeAddGameBindingModel,
                                         BindingResult bindingResult,
                                         RedirectAttributes redirectAttributes) throws IOException {

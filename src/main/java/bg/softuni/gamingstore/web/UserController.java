@@ -12,6 +12,7 @@ import bg.softuni.gamingstore.models.services.RegisterServiceModel;
 import bg.softuni.gamingstore.services.BillingHistoryService;
 import bg.softuni.gamingstore.services.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -128,6 +129,7 @@ public class UserController {
     }
 
     @GetMapping("/change-user-role")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String changeRole(Model model){
         if (!model.containsAttribute("changeUserRoleBindingModel")){
             model.addAttribute("changeUserRoleBindingModel", new  ChangeUserRoleBindingModel());
@@ -154,6 +156,7 @@ public class UserController {
     }
 
     @GetMapping("/demote-user")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String demoteUser(Model model){
         if (!model.containsAttribute("demoteUserBindingModel")){
             model.addAttribute("demoteUserBindingModel", new DemoteUserBindingModel());
@@ -180,6 +183,7 @@ public class UserController {
     }
 
     @GetMapping("/delete-user")
+    @PreAuthorize("hasRole('ROLE_OWNER')")
     public String deleteUser(Model model){
         if (!model.containsAttribute("deleteUserBindingModel")){
             model.addAttribute("deleteUserBindingModel", new DeleteUserBindingModel());
@@ -189,6 +193,7 @@ public class UserController {
     }
 
     @PostMapping("/delete-user")
+    @PreAuthorize("hasRole('ROLE_OWNER')")
     public String deleteUserConfirm(@Valid DeleteUserBindingModel deleteUserBindingModel,
                                     BindingResult bindingResult,
                                     RedirectAttributes redirectAttributes){
@@ -206,6 +211,7 @@ public class UserController {
     }
 
     @GetMapping("/billing")
+    @PreAuthorize("hasRole('ROLE_OWNER')")
     public String billingHistories(Model model){
         model.addAttribute("allBillingHistories", this.billingHistoryService.getAllBillingHistories());
         return "billing-history";
