@@ -3,20 +3,20 @@ package bg.softuni.gamingstore.services;
 import bg.softuni.gamingstore.models.entities.RoleEntity;
 import bg.softuni.gamingstore.models.entities.UserEntity;
 import bg.softuni.gamingstore.models.entities.enums.RoleEnums;
-import bg.softuni.gamingstore.models.services.RegisterServiceModel;
-import bg.softuni.gamingstore.repositories.RolesRepository;
+import bg.softuni.gamingstore.models.services.DeleteUserServiceModel;
 import bg.softuni.gamingstore.repositories.UserRepository;
-import bg.softuni.gamingstore.services.impl.GoodGamesUserServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -176,6 +176,21 @@ public class UserServiceTest {
         assertEquals(users.size(), result2.size());
     }
 
+    @Test
+    public void deletingUserShouldReturnEmpty(){
+        UserEntity user = new UserEntity();
+        user.setUsername("Test1");
+        user.setId(Long.parseLong("1"));
 
+        Mockito.when(this.mockRepository.saveAndFlush(user))
+                .thenReturn(user);
+
+        DeleteUserServiceModel serviceModel = new DeleteUserServiceModel();
+        serviceModel.setUsername("Test1");
+
+        this.userService.deleteUser(serviceModel);
+
+        assertEquals(null, user);
+    }
 
 }

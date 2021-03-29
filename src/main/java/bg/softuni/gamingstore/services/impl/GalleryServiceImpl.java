@@ -33,9 +33,14 @@ public class GalleryServiceImpl implements GalleryService {
     @Override
     public void add(GalleryAddServiceModel galleryAddServiceModel) throws IOException {
         PictureEntity pictureEntity = this.modelMapper.map(galleryAddServiceModel, PictureEntity.class);
+        String imageUrl = null;
 
-        MultipartFile img = galleryAddServiceModel.getImg();
-        String imageUrl = this.cloudinaryService.uploadImage(img);
+        try {
+            MultipartFile img = galleryAddServiceModel.getImg();
+            imageUrl = this.cloudinaryService.uploadImage(img);
+        } catch (Exception ignored){
+
+        }
 
         pictureEntity.setId(galleryAddServiceModel.getId());
         pictureEntity.setUserEntity(this.userService.getUserEntity());

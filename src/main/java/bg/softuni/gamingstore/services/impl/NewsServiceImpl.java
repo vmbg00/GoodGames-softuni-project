@@ -45,8 +45,14 @@ public class NewsServiceImpl implements NewsService {
     public void addNewNews(NewsAddServiceModel newsAddServiceModel) throws IOException {
         NewsEntity newsEntity = this.modelMapper.map(newsAddServiceModel, NewsEntity.class);
 
-        MultipartFile img = newsAddServiceModel.getImage();
-        String imageUrl = this.cloudinaryService.uploadImage(img);
+        String imageUrl = null;
+
+        try {
+            MultipartFile img = newsAddServiceModel.getImage();
+            imageUrl = this.cloudinaryService.uploadImage(img);
+        } catch (Exception ignored){
+
+        }
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
         String format = formatter.format(LocalDate.now());

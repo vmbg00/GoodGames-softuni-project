@@ -1,6 +1,7 @@
 package bg.softuni.gamingstore.services;
 
 import bg.softuni.gamingstore.models.entities.PictureEntity;
+import bg.softuni.gamingstore.models.services.GalleryAddServiceModel;
 import bg.softuni.gamingstore.repositories.PicturesRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,5 +64,16 @@ public class GalleryServiceTest {
         PictureEntity actualPicture = this.galleryService.findPictureByTitle(title);
 
         assertEquals(actualPicture, pictureEntity);
+    }
+
+    @Test
+    public void addingAGameShouldBeSuccessful() throws IOException {
+        GalleryAddServiceModel serviceModel = new GalleryAddServiceModel();
+        serviceModel.setTitle("Test1");
+
+        this.galleryService.add(serviceModel);
+        List<PictureEntity> all = this.mockRepository.findAll();
+
+        assertEquals(1, all.size());
     }
 }
