@@ -1,10 +1,9 @@
-package bg.softuni.gamingstore.integration.services;
+package bg.softuni.gamingstore.services;
 
 import bg.softuni.gamingstore.models.entities.GameEntity;
 import bg.softuni.gamingstore.models.entities.ShoppingCartEntity;
 import bg.softuni.gamingstore.models.entities.UserEntity;
 import bg.softuni.gamingstore.repositories.ShoppingCartRepository;
-import bg.softuni.gamingstore.services.ShoppingCartService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -16,8 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -109,6 +108,40 @@ public class ShoppingCartServiceTest {
         List<ShoppingCartEntity> allCartsWithGame = this.shoppingCartService.getAllCartsWithUsername(name);
 
         assertNull(allCartsWithGame);
+    }
+
+    @Test
+    public void checkIfGameIsInCartShouldReturnTrue(){
+        String name = "Glory hold";
+
+        List<ShoppingCartEntity> shoppingCartEntities = new ArrayList<>();
+
+        ShoppingCartEntity shoppingCartEntity = new ShoppingCartEntity();
+
+        GameEntity gameEntity = new GameEntity().setName(name);
+        gameEntity.setId(Long.parseLong("1"));
+
+        shoppingCartEntity.setGames(gameEntity);
+        shoppingCartEntity.setId(Long.parseLong("1"));
+
+        UserEntity userEntity = new UserEntity().setUsername("Tester");
+        userEntity.setId(Long.parseLong("1"));
+        userEntity.setGames(List.of(gameEntity));
+
+        shoppingCartEntity.setUser(userEntity);
+
+        shoppingCartEntities.add(shoppingCartEntity);
+
+        Mockito.when(this.mockRepository.getShoppingCartEntityByGames_Name(name))
+                .thenReturn(shoppingCartEntities);
+
+        Mockito.when(this.mockRepository.save(any(ShoppingCartEntity.class)))
+                .thenReturn(shoppingCartEntity);
+
+        ShoppingCartEntity shoppingCartEntity1 = shoppingCartEntities.get(0);
+        boolean isTrue = this.shoppingCartService.checkIfGameIsAlreadyInCart(shoppingCartEntity1.getGames().getId(), userEntity);
+
+        assertTrue(isTrue);
     }
 
 }

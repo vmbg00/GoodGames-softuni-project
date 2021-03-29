@@ -1,19 +1,22 @@
-package bg.softuni.gamingstore.integration.services;
+package bg.softuni.gamingstore.services;
 
+import bg.softuni.gamingstore.models.entities.RoleEntity;
 import bg.softuni.gamingstore.models.entities.UserEntity;
+import bg.softuni.gamingstore.models.entities.enums.RoleEnums;
+import bg.softuni.gamingstore.models.services.RegisterServiceModel;
+import bg.softuni.gamingstore.repositories.RolesRepository;
 import bg.softuni.gamingstore.repositories.UserRepository;
-import bg.softuni.gamingstore.services.UserService;
+import bg.softuni.gamingstore.services.impl.GoodGamesUserServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -22,12 +25,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @RunWith(SpringRunner.class)
 public class UserServiceTest {
 
-    @MockBean
-    private UserRepository mockRepository;
-
     @Autowired
     private UserService userService;
-
+    @MockBean
+    private UserRepository mockRepository;
 
     @Test
     public void findByNameShouldReturnNull() {
@@ -138,5 +139,43 @@ public class UserServiceTest {
 
         assertNull(result);
     }
+
+    @Test
+    public void getAllUsersWithAdminRoleAndWithOnlyUserRoleShouldReturnCorrectCollections(){
+        RoleEntity admin = new RoleEntity().setName(RoleEnums.ADMIN);
+        RoleEntity user = new RoleEntity().setName(RoleEnums.USER);
+
+        admin.setId(Long.parseLong("1"));
+        user.setId(Long.parseLong("2"));
+
+        List<UserEntity> admins = new ArrayList<>();
+        List<UserEntity> users = new ArrayList<>();
+
+        UserEntity userEntity1 = new UserEntity().setUsername("Test1");
+        userEntity1.setRoles(Set.of(admin, user));
+        admins.add(userEntity1);
+
+        UserEntity userEntity3 = new UserEntity().setUsername("Test2");
+        userEntity3.setRoles(Set.of(admin, user));
+        admins.add(userEntity3);
+
+        UserEntity userEntity2 = new UserEntity().setUsername("Test3");;
+        userEntity2.setRoles(Set.of(user));
+        users.add(userEntity2);
+
+        Mockito.when(mockRepository.findAllWithUserAndAdminRoles())
+                .thenReturn(admins);
+
+        Mockito.when(mockRepository.findAllWithUserRoles())
+                .thenReturn(users);
+
+        List<UserEntity> result1 = this.userService.getAllWithAdminRoles();
+        List<UserEntity> result2 = this.userService.getAllUsers();
+
+        assertEquals(admins.size(), result1.size());
+        assertEquals(users.size(), result2.size());
+    }
+
+
 
 }

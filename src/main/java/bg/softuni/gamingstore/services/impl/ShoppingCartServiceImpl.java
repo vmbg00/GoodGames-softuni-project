@@ -90,8 +90,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public boolean checkIfGameIsAlreadyInCart(Long id) {
-        List<ShoppingCartEntity> cartEntities = this.shoppingCartRepository.findAllByUser(userService.getUserEntity());
+    public boolean checkIfGameIsAlreadyInCart(Long id, UserEntity userEntity) {
+        List<ShoppingCartEntity> cartEntities = this.shoppingCartRepository.findAllByUser(userEntity);
 
         for (ShoppingCartEntity cartEntity : cartEntities) {
             if (cartEntity.getGames().getId().equals(id)){

@@ -1,6 +1,7 @@
 package bg.softuni.gamingstore.services;
 
 import bg.softuni.gamingstore.models.entities.ShoppingCartEntity;
+import bg.softuni.gamingstore.models.entities.UserEntity;
 import bg.softuni.gamingstore.models.views.ShoppingCartGamesViewModel;
 
 import java.math.BigDecimal;
@@ -17,7 +18,7 @@ public interface ShoppingCartService {
 
     void removeItemFromCart(Long id);
 
-    boolean checkIfGameIsAlreadyInCart(Long id);
+    boolean checkIfGameIsAlreadyInCart(Long id, UserEntity userEntity);
 
     List<ShoppingCartEntity> findAllGames();
 

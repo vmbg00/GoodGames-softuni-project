@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    void register(RegisterServiceModel map);
+    RegisterServiceModel register(RegisterServiceModel map);
 
     boolean userNameExists(String username);
 

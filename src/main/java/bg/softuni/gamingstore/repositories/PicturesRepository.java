@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface PicturesRepository extends JpaRepository<PictureEntity, Long> {
     List<PictureEntity> findAllByOrderByIdDesc();
+
+    PictureEntity findPictureEntityByTitle(String title);
 }

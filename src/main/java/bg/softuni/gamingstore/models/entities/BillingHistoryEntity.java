@@ -1,5 +1,8 @@
 package bg.softuni.gamingstore.models.entities;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -14,17 +17,17 @@ public class BillingHistoryEntity extends BaseEntity {
     private String address;
     private String country;
     private String town;
-    private UserEntity userEntity;
+    private String userEntity;
 
     public BillingHistoryEntity() {
     }
 
-    @ManyToOne
-    public UserEntity getUserEntity() {
+    @Column(name = "user")
+    public String getUserEntity() {
         return userEntity;
     }
 
-    public BillingHistoryEntity setUserEntity(UserEntity userEntity) {
+    public BillingHistoryEntity setUserEntity(String userEntity) {
         this.userEntity = userEntity;
         return this;
     }

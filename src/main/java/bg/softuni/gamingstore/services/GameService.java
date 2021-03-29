@@ -19,6 +19,8 @@ public interface GameService {
 
     void addNewGameToStore(StoreAddGameServiceModel map) throws IOException;
 
+    List<GameEntity> fillGamesList(List<GameEntity> gameEntities);
+
     GameEntity firstGame();
 
     GameEntity secondGame();

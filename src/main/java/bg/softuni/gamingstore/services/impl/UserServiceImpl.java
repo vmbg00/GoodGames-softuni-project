@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void register(RegisterServiceModel newUser) {
+    public RegisterServiceModel register(RegisterServiceModel newUser) {
         UserEntity userEntity = this.modelMapper.map(newUser, UserEntity.class);
 
         RoleEntity role = this.rolesRepository.findByName(RoleEnums.USER);
@@ -67,6 +67,7 @@ public class UserServiceImpl implements UserService {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        return newUser;
     }
 
     @Override

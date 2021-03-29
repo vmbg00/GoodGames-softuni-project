@@ -49,4 +49,14 @@ public class GalleryServiceImpl implements GalleryService {
         return this.picturesRepository.findAllByOrderByIdDesc().stream().map(pictureEntity ->
                 this.modelMapper.map(pictureEntity, GalleryViewModel.class)).collect(Collectors.toList());
     }
+
+    @Override
+    public List<PictureEntity> findAllPictures() {
+        return this.picturesRepository.findAll();
+    }
+
+    @Override
+    public PictureEntity findPictureByTitle(String title) {
+        return this.picturesRepository.findPictureEntityByTitle(title);
+    }
 }

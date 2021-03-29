@@ -66,7 +66,11 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public long countAllGames() {
-        return this.gamesRepository.count() - this.userService.getUserEntity().getGames().size();
+        try {
+            return this.gamesRepository.count() - this.userService.getUserEntity().getGames().size();
+        } catch (Exception e){
+            return this.gamesRepository.count();
+        }
     }
 
     @Override
@@ -83,9 +87,13 @@ public class GameServiceImpl implements GameService {
     @Override
     public void addNewGameToStore(StoreAddGameServiceModel map) throws IOException {
         GameEntity gameEntity = this.modelMapper.map(map, GameEntity.class);
-
-        MultipartFile img = map.getImageUrl();
-        String imageUrl = this.cloudinaryService.uploadImage(img);
+        String imageUrl = null;
+        try {
+            MultipartFile img = map.getImageUrl();
+            imageUrl = this.cloudinaryService.uploadImage(img);
+        } catch (Exception ignored){
+            
+        }
 
         gameEntity.setImageUrl(imageUrl);
 
@@ -93,14 +101,20 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    public List<GameEntity> fillGamesList(List<GameEntity> gameEntities) {
+        return this.games = gameEntities;
+    }
+
+    @Override
     public GameEntity firstGame() {
-        return games.get(0);
+        return this.games.get(0);
     }
 
     @Override
     public GameEntity secondGame() {
-        return games.get(1);
+        return this.games.get(1);
     }
+
 
     @Override
     public List<GameEntity> findAllGames() {

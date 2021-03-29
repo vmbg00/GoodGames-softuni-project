@@ -30,7 +30,7 @@ public class BillingHistoryServiceImpl implements BillingHistoryService {
     @Override
     public void addToHistory(BillingHistoryServiceModel billing) {
         BillingHistoryEntity billingHistoryEntity = this.modelMapper.map(billing, BillingHistoryEntity.class);
-        billingHistoryEntity.setUserEntity(this.userService.getUserEntity());
+        billingHistoryEntity.setUserEntity(this.userService.getUserEntity().getUsername());
 
         this.billingHistoryRepository.save(billingHistoryEntity);
     }
@@ -40,7 +40,7 @@ public class BillingHistoryServiceImpl implements BillingHistoryService {
         return this.billingHistoryRepository.findAll().stream().map(billingHistoryEntity -> {
             BillingHistoryViewModel viewModel = this.modelMapper.map(billingHistoryEntity, BillingHistoryViewModel.class);
 
-            viewModel.setUser(billingHistoryEntity.getUserEntity().getUsername());
+            viewModel.setUser(billingHistoryEntity.getUserEntity());
 
             return viewModel;
         }).collect(Collectors.toList());

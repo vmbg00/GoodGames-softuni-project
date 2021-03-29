@@ -1,16 +1,20 @@
-package bg.softuni.gamingstore.integration.services;
+package bg.softuni.gamingstore.services;
 
 import bg.softuni.gamingstore.models.entities.GameEntity;
+import bg.softuni.gamingstore.models.services.StoreAddGameServiceModel;
 import bg.softuni.gamingstore.repositories.GamesRepository;
-import bg.softuni.gamingstore.services.GameService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,6 +110,68 @@ public class GamesServiceTest {
         GameEntity byId = this.gameService.findById(id);
 
         assertEquals(byId, gameEntity);
+    }
+
+    @Test
+    public void deletingGameShouldReturnEmpty(){
+        GameEntity gameEntity = new GameEntity();
+        gameEntity.setName("Alabala");
+        gameEntity.setId(Long.parseLong("1"));
+
+        Mockito.when(this.mockRepository.save(gameEntity))
+                .thenReturn(gameEntity);
+
+        this.gameService.deleteGame(gameEntity.getId());
+        GameEntity byId;
+        try {
+            byId = this.gameService.findById(Long.parseLong("1"));
+        } catch (Exception e){
+            byId = null;
+        }
+
+        assertNull(byId);
+    }
+
+    @Test
+    public void findFirstGameAndSecondGameMethodsShouldReturnCorrectEntities(){
+        GameEntity game1 = new GameEntity();
+        game1.setName("test1");
+        game1.setId(Long.parseLong("1"));
+
+        GameEntity game2 = new GameEntity();
+        game2.setName("test2");
+        game2.setId(Long.parseLong("2"));
+
+        List<GameEntity> games = new ArrayList<>();
+        games.add(game1);
+        games.add(game2);
+
+        Mockito.when(this.mockRepository.findById(Long.parseLong("1")))
+                .thenReturn(java.util.Optional.of(game1));
+
+        Mockito.when(this.mockRepository.findById(Long.parseLong("2")))
+                .thenReturn(java.util.Optional.of(game2));
+
+        List<GameEntity> gameEntities = this.gameService.fillGamesList(games);
+
+        GameEntity gameEntity = this.gameService.firstGame();
+        GameEntity gameEntity2 = this.gameService.secondGame();
+
+        assertEquals(gameEntities.get(0), gameEntity);
+        assertEquals(gameEntities.get(1), gameEntity2);
+    }
+
+    @Test
+    public void addingGameShouldReturnCorrectEntity() throws IOException {
+        StoreAddGameServiceModel gameServiceModel = new StoreAddGameServiceModel();
+        gameServiceModel.setName("Alabala");
+        gameServiceModel.setPrice(BigDecimal.valueOf(25));
+        gameServiceModel.setDescription("asdasdasdasdasd");
+
+        this.gameService.addNewGameToStore(gameServiceModel);
+        List<GameEntity> all = this.gameService.findAllGames();
+
+        assertEquals(1, all.size());
     }
 
 }

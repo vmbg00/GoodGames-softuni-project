@@ -8,6 +8,7 @@ import bg.softuni.gamingstore.models.services.StoreAddGameServiceModel;
 import bg.softuni.gamingstore.services.BillingHistoryService;
 import bg.softuni.gamingstore.services.GameService;
 import bg.softuni.gamingstore.services.ShoppingCartService;
+import bg.softuni.gamingstore.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -23,13 +24,15 @@ import java.io.IOException;
 public class StoreController {
 
     private final GameService gameService;
+    private final UserService userService;
     private final ModelMapper modelMapper;
     private final BillingHistoryService billingHistoryService;
     private final ShoppingCartService shoppingCartService;
     private final GameCreatedEventPublisher publisher;
 
-    public StoreController(GameService gameService, ModelMapper modelMapper, BillingHistoryService billingHistoryService, ShoppingCartService shoppingCartService, GameCreatedEventPublisher publisher) {
+    public StoreController(GameService gameService, UserService userService, ModelMapper modelMapper, BillingHistoryService billingHistoryService, ShoppingCartService shoppingCartService, GameCreatedEventPublisher publisher) {
         this.gameService = gameService;
+        this.userService = userService;
         this.modelMapper = modelMapper;
         this.billingHistoryService = billingHistoryService;
         this.shoppingCartService = shoppingCartService;
@@ -49,7 +52,7 @@ public class StoreController {
 
     @PostMapping("/store/add/{id}")
     public String addToCart(@PathVariable Long id, RedirectAttributes redirectAttributes){
-        if (this.shoppingCartService.checkIfGameIsAlreadyInCart(id)){
+        if (this.shoppingCartService.checkIfGameIsAlreadyInCart(id, this.userService.getUserEntity())){
             redirectAttributes.addFlashAttribute("checkIfGameIsAlreadyInCart", true);
         }
         else {

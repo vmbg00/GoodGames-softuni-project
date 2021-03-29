@@ -40,6 +40,7 @@ public class UserController {
     }
 
     @GetMapping("/login")
+    @PreAuthorize("isAnonymous()")
     public String login(){
         return "login";
     }
@@ -80,6 +81,7 @@ public class UserController {
     }
 
     @GetMapping("/register")
+    @PreAuthorize("isAnonymous()")
     public String register(Model model){
         if (!model.containsAttribute("registerBindingModel")){
             model.addAttribute("registerBindingModel", new RegisterBindingModel());
@@ -88,6 +90,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
+    @PreAuthorize("isAnonymous()")
     public String registerConfirm(@Valid RegisterBindingModel registerBindingModel,
                                   BindingResult bindingResult,
                                   RedirectAttributes redirectAttributes){
