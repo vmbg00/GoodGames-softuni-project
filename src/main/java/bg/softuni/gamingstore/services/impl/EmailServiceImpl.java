@@ -20,11 +20,12 @@ public class EmailServiceImpl implements EmailService {
 
 
     @Override
-    public void sendMail(String to) {
+    public boolean sendMail(String to) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
         message.setSubject("GoodGames | Subscription");
         message.setText("Thank you for subscribing. You'll receive an email when the upcoming game is released!");
         emailSender.send(message);
+        return true;
     }
 }

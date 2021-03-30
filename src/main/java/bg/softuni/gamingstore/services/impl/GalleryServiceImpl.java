@@ -46,7 +46,7 @@ public class GalleryServiceImpl implements GalleryService {
         pictureEntity.setUserEntity(this.userService.getUserEntity());
         pictureEntity.setUrl(imageUrl);
 
-        this.picturesRepository.save(pictureEntity);
+        this.picturesRepository.saveAndFlush(pictureEntity);
     }
 
     @Override

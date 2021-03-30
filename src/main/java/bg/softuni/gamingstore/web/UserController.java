@@ -14,7 +14,6 @@ import bg.softuni.gamingstore.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
-@Controller
-@RequestMapping("/users")
+@RestController(value = "/users")
 public class UserController {
 
     private final UserService userService;
@@ -113,7 +111,7 @@ public class UserController {
         this.userService.register(this.modelMapper.map(registerBindingModel, RegisterServiceModel.class));
         this.publisher.publishEvent(registerBindingModel.getUsername());
 
-        return "redirect:/users/login";
+        return "redirect:/";
     }
 
     @PostMapping("/login-error")

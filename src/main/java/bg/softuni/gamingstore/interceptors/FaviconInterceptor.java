@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class FaviconInterceptor implements HandlerInterceptor {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(HomeInterceptor.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(FaviconInterceptor.class);
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {

@@ -1,7 +1,7 @@
 package bg.softuni.gamingstore.services;
 
 import bg.softuni.gamingstore.models.entities.GameEntity;
-import bg.softuni.gamingstore.models.services.StoreAddGameServiceModel;
+import bg.softuni.gamingstore.models.entities.ShoppingCartEntity;
 import bg.softuni.gamingstore.repositories.GamesRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,12 +9,8 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -159,19 +155,6 @@ public class GamesServiceTest {
 
         assertEquals(gameEntities.get(0), gameEntity);
         assertEquals(gameEntities.get(1), gameEntity2);
-    }
-
-    @Test
-    public void addingGameShouldReturnCorrectEntity() throws IOException {
-        StoreAddGameServiceModel gameServiceModel = new StoreAddGameServiceModel();
-        gameServiceModel.setName("Alabala");
-        gameServiceModel.setPrice(BigDecimal.valueOf(25));
-        gameServiceModel.setDescription("asdasdasdasdasd");
-
-        this.gameService.addNewGameToStore(gameServiceModel);
-        List<GameEntity> all = this.gameService.findAllGames();
-
-        assertEquals(1, all.size());
     }
 
 }

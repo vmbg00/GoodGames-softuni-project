@@ -56,6 +56,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                         defaultSuccessUrl("/").
                 // on login failure redirect here
                         failureForwardUrl("/users/login-error").
+                and()
+                .rememberMe().key("uniqueAndSecret123").tokenValiditySeconds(86400).rememberMeParameter("remember-me").
                 and().
                 logout().
                 logoutUrl("/users/logout").

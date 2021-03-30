@@ -3,14 +3,16 @@ package bg.softuni.gamingstore.services;
 import bg.softuni.gamingstore.models.entities.RoleEntity;
 import bg.softuni.gamingstore.models.entities.UserEntity;
 import bg.softuni.gamingstore.models.entities.enums.RoleEnums;
-import bg.softuni.gamingstore.models.services.DeleteUserServiceModel;
 import bg.softuni.gamingstore.repositories.UserRepository;
+import bg.softuni.gamingstore.services.impl.GoodGamesUserServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -18,8 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -27,6 +28,8 @@ public class UserServiceTest {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private GoodGamesUserServiceImpl goodGamesUserService;
     @MockBean
     private UserRepository mockRepository;
 
@@ -177,20 +180,18 @@ public class UserServiceTest {
     }
 
     @Test
-    public void deletingUserShouldReturnEmpty(){
-        UserEntity user = new UserEntity();
-        user.setUsername("Test1");
-        user.setId(Long.parseLong("1"));
+    public void loadingUserByUsernameShouldWork(){
+        String name = "admin";
+        UserEntity userEntity = new UserEntity().setUsername(name);
+        userEntity.setRoles(Set.of(new RoleEntity().setName(RoleEnums.ADMIN)));
+        userEntity.setPassword("random");
 
-        Mockito.when(this.mockRepository.saveAndFlush(user))
-                .thenReturn(user);
+        Mockito.when(this.mockRepository.findByUsername(name))
+                .thenReturn(Optional.of(userEntity));
 
-        DeleteUserServiceModel serviceModel = new DeleteUserServiceModel();
-        serviceModel.setUsername("Test1");
+        UserDetails userDetails = this.goodGamesUserService.loadUserByUsername(name);
 
-        this.userService.deleteUser(serviceModel);
-
-        assertEquals(null, user);
+        assertNotEquals(null, userDetails);
     }
 
 }

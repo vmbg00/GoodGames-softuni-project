@@ -78,15 +78,22 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public void removeItemFromCart(Long id) {
-        List<ShoppingCartEntity> allByUser = this.shoppingCartRepository.findAllByUser(this.userService.getUserEntity());
+    public boolean removeItemFromCart(Long id) {
+        List<ShoppingCartEntity> allByUser = null;
+        try {
+            allByUser = this.shoppingCartRepository.findAllByUser(this.userService.getUserEntity());
+        } catch (Exception ignored){
+
+        }
 
         for (ShoppingCartEntity shoppingCartEntity : allByUser) {
             if (shoppingCartEntity.getGames().getId().equals(id)){
                 GameEntity gameEntity = this.gamesRepository.findById(id).get();
                 this.shoppingCartRepository.deleteShoppingCartEntityByGames_Id(gameEntity.getId());
+                return true;
             }
         }
+        return false;
     }
 
     @Override
