@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "org.hibernate.dialect.PostgreSQLDialect",
+      "type": "java.lang.String",
+      "description": "Description for org.hibernate.dialect.PostgreSQLDialect."
+  }
+] }
