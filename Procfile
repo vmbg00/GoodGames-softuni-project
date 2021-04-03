@@ -1,1 +1,1 @@
-web: java -jar target/name-version.jar
+web: java -jar target/gaming-store.jar
