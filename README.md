@@ -7,4 +7,4 @@ username: admin
 
 password: 12345
 
-link to website: (will be added soon)
+link to website: https://goodgames-softuni.herokuapp.com/
