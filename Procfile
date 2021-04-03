@@ -1,1 +1,1 @@
-web: java -jar target/gaming_store.jar
+web: java -jar target/gamingstore-0.0.1-SNAPSHOT.jar

@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>bg.softuni</groupId>
-    <artifactId>gaming-store</artifactId>
+    <artifactId>gamingstore</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>gaming_store</name>
+    <name>gamingstore</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>15</java.version>
