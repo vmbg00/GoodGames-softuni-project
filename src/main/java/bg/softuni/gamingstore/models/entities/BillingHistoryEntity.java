@@ -22,7 +22,7 @@ public class BillingHistoryEntity extends BaseEntity {
     public BillingHistoryEntity() {
     }
 
-    @Column(name = "user")
+    @Column(name = "_user")
     public String getUserEntity() {
         return userEntity;
     }
