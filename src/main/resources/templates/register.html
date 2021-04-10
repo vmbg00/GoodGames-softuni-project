@@ -150,6 +150,7 @@
 					<i class="fa fa-check"></i>
 				</span>
                 <input th:field="*{confirmPassword}" minlength="5" type="password" class="form-control" name="confirmPassword" placeholder="Enter confirm password" required="required">
+                <small th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" id="confirmPasswordError" class="form-text bg-danger rounded"></small>
             </div>
         </div>
         <div class="form-group">

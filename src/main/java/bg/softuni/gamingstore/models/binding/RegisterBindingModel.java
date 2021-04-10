@@ -1,9 +1,15 @@
 package bg.softuni.gamingstore.models.binding;
 
+import bg.softuni.gamingstore.models.validators.FieldMatch;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+@FieldMatch(
+        first = "password",
+        second = "confirmPassword"
+)
 public class RegisterBindingModel {
 
     private String username;
